@@ -2,6 +2,7 @@ import { useState } from "react"
 import { submitLead } from "../lib/api"
 import { getUTM } from "../hooks/useUTM"
 import { useNavigate } from "react-router-dom"
+import { trackLead } from "../lib/tracking"
 
 export default function LeadForm() {
   const [form, setForm] = useState({
@@ -33,6 +34,7 @@ export default function LeadForm() {
     setLoading(false)
 
     if (res.success) {
+      trackLead({ value: 10, currency: 'USD' }) // Fire conversion pixel
       navigate("/thank-you")
     } else {
       alert("Có lỗi xảy ra, thử lại!")
