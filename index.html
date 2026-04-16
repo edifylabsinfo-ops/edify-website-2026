@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edify Labs - Kiến Tạo Tương Lai Giáo Dục</title>
-    <meta name="description" content="Edify Labs - Đối tác chuyển đổi số giáo dục hàng đầu. Giải pháp công nghệ toàn diện cho trường học và doanh nghiệp đào tạo.">
-    
-    <!-- 1. Brand Font (Bắt buộc) -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Edify Labs — Trang Chủ 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-    
     <style>
-        /* 2. Hệ thống màu sắc (CSS Tokens) */
+        /* ─── TOKENS & RESET ─────────────────────────────────── */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
             --navy: #0F1F3D;
             --navy-mid: #1A3260;
@@ -21,483 +18,764 @@
             --off-white: #F8FAFC;
             --gray-100: #F1F5F9;
             --gray-200: #E2E8F0;
+            --gray-400: #94A3B8;
             --gray-600: #475569;
             --gray-800: #1E293B;
-            
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.3);
+            --shadow-md: 0 4px 24px rgba(15,31,61,0.08);
+            --shadow-lg: 0 16px 48px rgba(15,31,61,0.12);
+            --radius-md: 12px;
+            --radius-lg: 16px;
         }
-
-        /* Reset & Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--off-white);
+            background: var(--off-white);
             color: var(--gray-800);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
-        ul { list-style: none; }
-        img { max-width: 100%; display: block; }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Typography Utilities */
-        h1, h2, h3, h4 {
-            font-weight: 700;
-            line-height: 1.2;
-            color: var(--navy);
-        }
-
+        /* ─── UTILITIES & ANIMATIONS ────────────────────────── */
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+        .section-padding { padding: 100px 0; }
+        .text-center { text-align: center; }
         .text-gradient {
-            background: linear-gradient(135deg, var(--electric) 0%, var(--teal) 100%);
+            background: linear-gradient(135deg, var(--electric), var(--teal));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        /* Buttons (Style Guide) */
-        .btn {
-            display: inline-block;
-            padding: 12px 32px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
+        
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .btn-primary {
-            background-color: var(--electric);
-            color: var(--white);
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        /* ─── TOP BAR ─────────────────────────────────────────── */
+        .topbar {
+            background: var(--navy);
+            padding: 0 40px;
+            height: 36px;
+            display: flex; align-items: center; justify-content: space-between;
         }
-
-        .btn-primary:hover {
-            background-color: var(--navy-mid);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+        .topbar-item {
+            font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.75);
+            text-decoration: none; transition: 0.2s; display: flex; align-items: center; gap: 6px;
         }
+        .topbar-item:hover { color: var(--white); }
+        .topbar-lang { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.4); cursor: pointer; }
+        .topbar-lang.active { color: var(--electric-glow); }
 
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--electric);
-            color: var(--electric);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--electric);
-            color: var(--white);
-        }
-
-        /* Header / Navigation */
+        /* ─── HEADER ──────────────────────────────────────────── */
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
+            position: sticky; top: 0; z-index: 1000;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+        header.scrolled {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--gray-200);
-            padding: 15px 0;
-        }
-
-        .nav-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--navy);
-            letter-spacing: -0.5px;
-        }
-        
-        .logo span { color: var(--electric); }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            font-weight: 600;
-            color: var(--gray-600);
-            font-size: 0.95rem;
-        }
-
-        .nav-links a:hover {
-            color: var(--electric);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 160px 0 100px;
-            background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), transparent 40%),
-                        radial-gradient(circle at bottom left, rgba(13, 148, 136, 0.08), transparent 40%);
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-        }
-
-        .hero-content {
-            max-width: 650px;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: var(--navy);
-        }
-
-        .hero p {
-            font-size: 1.125rem;
-            color: var(--gray-600);
-            margin-bottom: 40px;
-            font-weight: 400;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        /* Glassmorphism Card Style */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 16px;
             box-shadow: var(--shadow-md);
         }
-
-        /* Services Section */
-        .section {
-            padding: 100px 0;
+        nav {
+            max-width: 1280px; margin: 0 auto;
+            height: 72px; padding: 0 40px;
+            display: flex; align-items: center; justify-content: space-between;
         }
 
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 60px;
+        /* LOGO */
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-mark {
+            width: 40px; height: 40px; background: var(--navy);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; border-radius: 8px;
         }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+        .logo-mark::after {
+            content: ''; position: absolute; bottom: 0; right: 0;
+            width: 15px; height: 15px; background: var(--electric);
         }
+        .logo-mark-inner { color: white; font-weight: 800; font-size: 18px; z-index: 1; }
+        .logo-name { font-size: 18px; font-weight: 800; color: var(--navy); display: block; }
+        .logo-tagline { font-size: 9px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; }
 
-        .section-header p {
-            color: var(--gray-600);
+        /* NAV LINKS */
+        .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: center; }
+        .nav-item { position: relative; }
+        .nav-link {
+            padding: 10px 16px; font-size: 14px; font-weight: 600; color: var(--gray-600);
+            text-decoration: none; border-radius: 8px; transition: 0.2s; display: flex; align-items: center; gap: 4px;
         }
+        .nav-link:hover, .nav-item.open .nav-link { background: var(--gray-100); color: var(--navy); }
+        .nav-link.active { color: var(--electric); }
+        .nav-chevron { width: 14px; height: 14px; opacity: 0.5; transition: 0.3s; }
+        .nav-item.open .nav-chevron { transform: rotate(180deg); opacity: 1; }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+        /* MEGA DROPDOWN */
+        .dropdown {
+            position: absolute; top: calc(100% + 12px); left: 50%;
+            transform: translateX(-50%) translateY(-10px) scale(0.98);
+            background: white; border-radius: 12px; border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden;
+            transition: 0.25s ease; pointer-events: none; width: 640px; overflow: hidden;
         }
-
-        .service-card {
-            padding: 40px 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: var(--white);
-            border: 1px solid var(--gray-100);
+        .nav-item.open .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0) scale(1); pointer-events: auto; }
+        .mega-grid { display: grid; grid-template-columns: 1fr 1fr; padding: 20px; gap: 10px; }
+        .mega-item {
+            display: flex; gap: 12px; padding: 12px; border-radius: 8px; text-decoration: none; transition: 0.2s;
         }
+        .mega-item:hover { background: var(--gray-100); }
+        .mega-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+        .mega-name { font-size: 14px; font-weight: 700; color: var(--gray-800); }
+        .mega-desc { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
 
-        .service-card:hover {
-            transform: translateY(-5px);
+        /* ─── HERO SECTION ────────────────────────────────────── */
+        .hero {
+            min-height: calc(100vh - 108px); display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; background: var(--off-white); text-align: center;
+        }
+        .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--gray-200) 1px, transparent 1px), linear-gradient(90deg, var(--gray-200) 1px, transparent 1px); background-size: 50px 50px; opacity: 0.4; }
+        .hero-glow { position: absolute; width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(37,99,235,0.1) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        
+        .hero-content { position: relative; z-index: 2; max-width: 800px; padding: 0 24px; }
+        .hero-eyebrow { 
+            display: inline-flex; align-items: center; gap: 8px; background: #EFF6FF; color: var(--electric); 
+            padding: 8px 20px; border-radius: 100px; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 32px;
+        }
+        .hero-heading { font-size: clamp(40px, 6vw, 72px); font-weight: 800; line-height: 1.1; color: var(--navy); margin-bottom: 24px; letter-spacing: -0.03em; }
+        .hero-heading span { background: linear-gradient(135deg, var(--electric), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-sub { font-size: 18px; color: var(--gray-600); max-width: 600px; margin: 0 auto 40px; }
+        
+        .hero-btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 16px 32px; border-radius: 10px; font-weight: 700; font-family: inherit; cursor: pointer; transition: 0.2s; border: none; font-size: 15px; display: flex; align-items: center; gap: 8px; text-decoration: none; justify-content: center;}
+        .btn-primary { background: var(--electric); color: white; }
+        .btn-primary:hover { background: #1D4ED8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.3); }
+        .btn-outline { background: white; color: var(--navy); border: 1.5px solid var(--gray-200); }
+        .btn-outline:hover { border-color: var(--gray-400); transform: translateY(-2px); }
+
+        /* ─── SECTION 2: SOLUTION MATRIX ────────────────────── */
+        .solutions { background: var(--white); }
+        .section-header { margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .section-tag { 
+            color: var(--electric); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; display: block;
+        }
+        .section-title { font-size: 36px; font-weight: 800; color: var(--navy); margin-bottom: 16px; line-height: 1.2; }
+        .section-desc { font-size: 16px; color: var(--gray-600); }
+
+        .solution-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        }
+        .solution-card {
+            background: var(--off-white); border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg); padding: 32px;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+        .solution-card:hover {
+            transform: translateY(-8px);
             box-shadow: var(--shadow-lg);
             border-color: var(--electric-glow);
+            background: white;
         }
-
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            background: rgba(37, 99, 235, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-            color: var(--electric);
-            font-size: 1.5rem;
-            font-weight: 700;
+        .solution-icon {
+            width: 56px; height: 56px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; margin-bottom: 24px;
         }
-
-        .service-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 15px;
+        .solution-icon.blue { background: #EFF6FF; color: var(--electric); }
+        .solution-icon.green { background: #F0FDF4; color: var(--teal); }
+        .solution-icon.orange { background: #FFF7ED; color: #EA580C; }
+        
+        .solution-title { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+        .solution-text { font-size: 14px; color: var(--gray-600); margin-bottom: 24px; flex-grow: 1; }
+        .solution-link {
+            font-size: 14px; font-weight: 700; color: var(--electric);
+            text-decoration: none; display: flex; align-items: center; gap: 6px;
+            transition: gap 0.2s;
         }
+        .solution-link:hover { gap: 10px; }
 
-        .service-card p {
-            color: var(--gray-600);
-            font-size: 0.95rem;
+        /* ─── SECTION 3: FEATURE HIGHLIGHT (Z-PATTERN) ───────── */
+        .features { background: var(--off-white); }
+        .feature-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+            align-items: center; margin-bottom: 80px;
         }
-
-        /* Why Us Section */
-        .why-us {
-            background-color: var(--navy);
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .why-us::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .why-us h2 { color: var(--white); }
-        .why-us p { color: var(--gray-200); }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-
-        .feature-item {
-            text-align: left;
-        }
-
-        .feature-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.1);
-            line-height: 1;
-            margin-bottom: -20px;
-            display: block;
-        }
-
-        .feature-item h3 {
-            color: var(--electric-glow);
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+        .feature-row:last-child { margin-bottom: 0; }
+        .feature-row.reverse { direction: rtl; }
+        .feature-row.reverse .feature-content { direction: ltr; }
+        
+        .feature-visual {
+            background: white; border-radius: var(--radius-lg);
+            padding: 40px; box-shadow: var(--shadow-md);
+            display: flex; align-items: center; justify-content: center;
             position: relative;
         }
-
-        .feature-item p {
-            color: var(--gray-200);
-            font-size: 0.95rem;
+        .feature-visual::before {
+            content: ''; position: absolute; inset: -10px;
+            background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(13,148,136,0.1));
+            border-radius: var(--radius-lg); z-index: -1;
+        }
+        .feature-icon-large {
+            font-size: 64px; line-height: 1;
+        }
+        
+        .feature-content h3 { font-size: 28px; font-weight: 800; color: var(--navy); margin-bottom: 16px; }
+        .feature-content p { font-size: 16px; color: var(--gray-600); margin-bottom: 24px; }
+        .feature-list { list-style: none; }
+        .feature-list li {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 15px; color: var(--gray-800); font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .check-icon {
+            width: 20px; height: 20px; background: var(--teal);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 12px; flex-shrink: 0;
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--gray-800);
-            color: var(--gray-200);
-            padding: 60px 0 30px;
-            font-size: 0.9rem;
+        /* ─── SECTION 4: COURSE PREVIEW ──────────────────────── */
+        .courses { background: var(--white); }
+        .course-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
         }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr;
-            gap: 50px;
-            margin-bottom: 40px;
+        .course-card {
+            background: var(--off-white); border-radius: var(--radius-lg);
+            overflow: hidden; border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
         }
-
-        .footer-brand h4 {
-            color: var(--white);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+        .course-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .course-thumb {
+            height: 200px; background: var(--gray-200);
+            position: relative; display: flex; align-items: center; justify-content: center;
+            font-size: 40px; color: var(--gray-400);
         }
-
-        .footer-brand p {
-            opacity: 0.8;
-            margin-bottom: 20px;
-            max-width: 300px;
+        .course-badge {
+            position: absolute; top: 16px; left: 16px;
+            background: var(--navy); color: white;
+            padding: 4px 12px; border-radius: 6px;
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
         }
+        .course-badge.hot { background: #EF4444; }
+        .course-body { padding: 24px; }
+        .course-cat { font-size: 12px; color: var(--electric); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .course-title { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 12px; line-height: 1.4; }
+        .course-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--gray-200); }
+        .course-level { font-size: 13px; color: var(--gray-600); display: flex; align-items: center; gap: 6px; }
+        .course-price { font-size: 16px; font-weight: 800; color: var(--teal); }
 
-        .footer-col h5 {
-            color: var(--white);
-            font-weight: 700;
-            margin-bottom: 20px;
-            font-size: 1rem;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--electric-glow);
-        }
-
-        .copyright {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 30px;
-            text-align: center;
+        /* ─── SECTION 5: SOCIAL PROOF ────────────────────────── */
+        .social-proof { background: var(--off-white); text-align: center; }
+        .logo-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 40px; align-items: center; margin-bottom: 60px;
             opacity: 0.6;
         }
+        .partner-logo {
+            font-size: 24px; font-weight: 800; color: var(--gray-400);
+            display: flex; align-items: center; justify-content: center;
+            filter: grayscale(100%); transition: 0.3s;
+        }
+        .partner-logo:hover { filter: grayscale(0%); opacity: 1; color: var(--navy); }
+        
+        .testimonial-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .testimonial-card {
+            background: white; padding: 32px; border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-200); text-align: left;
+        }
+        .stars { color: #FBBF24; margin-bottom: 16px; font-size: 18px; }
+        .quote { font-size: 15px; color: var(--gray-800); font-style: italic; margin-bottom: 24px; line-height: 1.6; }
+        .author { display: flex; align-items: center; gap: 12px; }
+        .avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--gray-200); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--navy); }
+        .author-info h4 { font-size: 14px; font-weight: 700; color: var(--navy); }
+        .author-info p { font-size: 12px; color: var(--gray-600); }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } /* Mobile menu simplified for demo */
-            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
-            .hero-buttons { flex-direction: column; }
-            .btn { width: 100%; text-align: center; }
+        /* ─── SECTION 6: CTA ─────────────────────────────────── */
+        .cta-section {
+            background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+            padding: 80px 24px; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .cta-glow {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 600px; height: 600px; background: radial-gradient(circle, rgba(37,99,235,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cta-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+        .cta-title { font-size: 36px; font-weight: 800; color: white; margin-bottom: 16px; }
+        .cta-desc { font-size: 18px; color: var(--gray-400); margin-bottom: 32px; }
+        .cta-btn-group { display: flex; gap: 16px; justify-content: center; }
+        .btn-white { background: white; color: var(--navy); }
+        .btn-white:hover { background: var(--gray-100); transform: translateY(-2px); }
+        .btn-glass { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); }
+        .btn-glass:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+        /* ─── FOOTER ──────────────────────────────────────────── */
+        .footer {
+            background: var(--navy);
+            color: var(--white);
+            padding: 80px 40px 24px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .footer-container { max-width: 1280px; margin: 0 auto; }
+        .footer-main {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 48px; margin-bottom: 64px;
+        }
+        .footer-desc { color: var(--gray-400); font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+        .footer-contact p { color: var(--gray-200); font-size: 14px; margin-bottom: 8px; }
+        .footer-title {
+            font-size: 13px; font-weight: 700; color: var(--white);
+            text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 24px;
+        }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 14px; }
+        .footer-links a {
+            color: var(--gray-400); text-decoration: none; font-size: 14px; font-weight: 500;
+            transition: color 0.2s, transform 0.2s; display: inline-block;
+        }
+        .footer-links a:hover { color: var(--electric-glow); transform: translateX(4px); }
+        .footer-newsletter input {
+            width: 100%; padding: 14px 16px; border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05); color: var(--white);
+            font-family: inherit; font-size: 14px; margin-bottom: 12px; outline: none; transition: border-color 0.2s;
+        }
+        .footer-newsletter input:focus { border-color: var(--electric-glow); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 13px; color: var(--gray-400);
+        }
+        .footer-social { display: flex; gap: 20px; }
+        .footer-social a { color: var(--gray-400); font-weight: 600; text-decoration: none; transition: color 0.2s; }
+        .footer-social a:hover { color: var(--white); }
+        .footer-legal a { color: var(--gray-400); text-decoration: none; }
+        .footer-legal a:hover { color: var(--white); }
+
+        /* ─── RESPONSIVE ────────────────────────────────────── */
+        @media (max-width: 1024px) {
+            .nav-links, .topbar { display: none; }
+            nav { padding: 0 20px; }
+            .solution-grid { grid-template-columns: 1fr; }
+            .feature-row { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .feature-row.reverse { direction: ltr; }
+            .feature-visual { order: -1; }
+            .footer-main { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+        @media (max-width: 640px) {
+            .hero-heading { font-size: 36px; }
+            .section-title { font-size: 28px; }
+            .footer { padding: 60px 20px 24px; }
+            .footer-main { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .cta-btn-group { flex-direction: column; }
+            .btn { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="container nav-wrapper">
-            <a href="#" class="logo">Edify<span>Labs</span></a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#about">Về chúng tôi</a></li>
-                    <li><a href="#services">Giải pháp</a></li>
-                    <li><a href="#projects">Dự án</a></li>
-                    <li><a href="#contact">Liên hệ</a></li>
-                </ul>
-            </nav>
-            <a href="#contact" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Tư vấn ngay</a>
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <a href="#" class="topbar-item">🚀 Khóa học mới: TikTok Shop Master 2026</a>
         </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Kiến Tạo Tương Lai <br><span class="text-gradient">Giáo Dục Số</span></h1>
-                <p>Edify Labs đồng hành cùng các tổ chức giáo dục chuyển đổi số toàn diện. Chúng tôi cung cấp giải pháp công nghệ tiên tiến, tối ưu hóa trải nghiệm học tập và quản lý.</p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">Bắt đầu dự án</a>
-                    <a href="#services" class="btn btn-outline">Khám phá giải pháp</a>
-                </div>
-            </div>
+        <div class="topbar-right">
+            <span class="topbar-lang active">VI</span>
+            <span class="topbar-lang">EN</span>
         </div>
-    </section>
+    </div>
 
-    <!-- Services Section -->
-    <section id="services" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Giải Pháp Toàn Diện</h2>
-                <p>Công nghệ cốt lõi giúp nâng tầm chất lượng đào tạo và vận hành.</p>
-            </div>
-            
-            <div class="services-grid">
-                <!-- Service 1 -->
-                <div class="service-card glass-card">
-                    <div class="icon-box">🎓</div>
-                    <h3>Hệ thống LMS</h3>
-                    <p>Nền tảng quản lý học tập linh hoạt, hỗ trợ đa dạng mô hình đào tạo trực tuyến và kết hợp (Blended Learning).</p>
+    <!-- HEADER -->
+    <header id="main-header">
+        <nav>
+            <a href="#" class="logo">
+                <div class="logo-mark"><span class="logo-mark-inner">E</span></div>
+                <div class="logo-text">
+                    <span class="logo-name">Edify Labs</span>
+                    <span class="logo-tagline">Knowledge to Execution</span>
                 </div>
+            </a>
 
-                <!-- Service 2 -->
-                <div class="service-card glass-card">
-                    <div class="icon-box">📱</div>
-                    <h3>Mobile App Education</h3>
-                    <p>Ứng dụng di động tùy chỉnh, kết nối nhà trường, phụ huynh và học sinh mọi lúc, mọi nơi.</p>
-                </div>
-
-                <!-- Service 3 -->
-                <div class="service-card glass-card">
-                    <div class="icon-box">⚡</div>
-                    <h3>Chuyển Đổi Số</h3>
-                    <p>Tư vấn và triển khai quy trình số hóa toàn diện, từ tuyển sinh, giảng dạy đến quản trị nhân sự.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Us Section -->
-    <section id="about" class="section why-us">
-        <div class="container">
-            <div class="section-header">
-                <h2>Tại Sao Chọn Edify Labs?</h2>
-                <p style="color: var(--gray-200);">Chúng tôi không chỉ viết code, chúng tôi kiến tạo giá trị bền vững.</p>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-item">
-                    <span class="feature-number">01</span>
-                    <h3>Công Nghệ Hiện Đại</h3>
-                    <p>Sử dụng các stack công nghệ mới nhất đảm bảo hiệu năng, bảo mật và khả năng mở rộng.</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-number">02</span>
-                    <h3>Am Hiểu Giáo Dục</h3>
-                    <p>Đội ngũ chuyên gia có kinh nghiệm sâu sắc trong lĩnh vực EdTech và quy trình sư phạm.</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-number">03</span>
-                    <h3>Tận Tâm & Trách Nhiệm</h3>
-                    <p>Cam kết đồng hành cùng khách hàng trong suốt vòng đời sản phẩm với dịch vụ hỗ trợ 24/7.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <h4>Edify Labs</h4>
-                    <p>Đối tác tin cậy trong hành trình chuyển đổi số giáo dục tại Việt Nam.</p>
-                    <div style="margin-top: 20px;">
-                        <!-- Social placeholders -->
-                        <a href="#" style="margin-right: 15px; font-weight: 600;">Facebook</a>
-                        <a href="#" style="margin-right: 15px; font-weight: 600;">LinkedIn</a>
-                        <a href="#" style="font-weight: 600;">Email</a>
+            <div class="nav-links">
+                <div class="nav-item"><a href="#" class="nav-link active">Trang Chủ</a></div>
+                
+                <div class="nav-item" id="nav-dichvu">
+                    <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown('dichvu')">
+                        Dịch Vụ
+                        <svg class="nav-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M4 6L8 10L12 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <div class="dropdown">
+                        <div class="mega-grid">
+                            <a href="#" class="mega-item">
+                                <div class="mega-icon" style="background:#EFF6FF">💼</div>
+                                <div><div class="mega-name">Agency</div><div class="mega-desc">Quảng cáo & Content toàn diện</div></div>
+                            </a>
+                            <a href="#" class="mega-item">
+                                <div class="mega-icon" style="background:#F0FDF4">🎬</div>
+                                <div><div class="mega-name">Studio</div><div class="mega-desc">Sản xuất Video & Podcast</div></div>
+                            </a>
+                            <a href="#" class="mega-item">
+                                <div class="mega-icon" style="background:#FFF7ED">🎓</div>
+                                <div><div class="mega-name">E-Learning</div><div class="mega-desc">Khóa học thực chiến Online</div></div>
+                            </a>
+                            <a href="#" class="mega-item">
+                                <div class="mega-icon" style="background:#F5F3FF">📱</div>
+                                <div><div class="mega-name">TikTok Ads</div><div class="mega-desc">Thuê tài khoản Agency ổn định</div></div>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                
+
+                <div class="nav-item"><a href="#giai-phap" class="nav-link">Giải Pháp</a></div>
+                <div class="nav-item"><a href="#khoa-hoc" class="nav-link">Khóa Học</a></div>
+                <div class="nav-item"><a href="#blog" class="nav-link">Blog</a></div>
+            </div>
+
+            <div class="nav-right">
+                <button class="btn btn-primary" style="padding: 10px 20px;">Bắt Đầu Miễn Phí</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+        <div class="hero-content reveal">
+            <div class="hero-eyebrow">✨ Hệ sinh thái đào tạo thực chiến số 1</div>
+            <h1 class="hero-heading">Học để làm.<br>Làm để <span>đo lường.</span></h1>
+            <p class="hero-sub">Giúp cá nhân và doanh nghiệp tối ưu kết quả kinh doanh thông qua nội dung sáng tạo và quảng cáo số đỉnh cao.</p>
+            <div class="hero-btn-group">
+                <a href="#khoa-hoc" class="btn btn-primary">Khám Phá Khóa Học</a>
+                <a href="#du-an" class="btn btn-outline">Xem Demo Dự Án</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: SOLUTION MATRIX -->
+    <section class="section-padding solutions" id="giai-phap">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <span class="section-tag">Giải Pháp Toàn Diện</span>
+                <h2 class="section-title">Hệ sinh thái 3 trụ cột chính</h2>
+                <p class="section-desc">Chúng tôi cung cấp giải pháp end-to-end từ đào tạo, thực thi đến sản xuất nội dung cho doanh nghiệp của bạn.</p>
+            </div>
+
+            <div class="solution-grid">
+                <!-- Card 1 -->
+                <div class="solution-card reveal">
+                    <div class="solution-icon blue">💼</div>
+                    <h3 class="solution-title">Performance Agency</h3>
+                    <p class="solution-text">Quản lý quảng cáo đa kênh (Facebook, TikTok, Google) với tư duy dữ liệu, tối ưu ROAS và ngân sách hiệu quả.</p>
+                    <a href="#" class="solution-link">Tìm hiểu thêm →</a>
+                </div>
+                <!-- Card 2 -->
+                <div class="solution-card reveal">
+                    <div class="solution-icon green">🎬</div>
+                    <h3 class="solution-title">Production Studio</h3>
+                    <p class="solution-text">Sản xuất video ngắn, TVC, Podcast chuyên nghiệp. Biến ý tưởng thành nội dung triệu view giữ chân khách hàng.</p>
+                    <a href="#" class="solution-link">Xem Portfolio →</a>
+                </div>
+                <!-- Card 3 -->
+                <div class="solution-card reveal">
+                    <div class="solution-icon orange">🎓</div>
+                    <h3 class="solution-title">E-Learning Platform</h3>
+                    <p class="solution-text">Kho khóa học thực chiến cập nhật hàng tuần. Cam kết "Học xong làm được ngay" với cộng đồng hỗ trợ 24/7.</p>
+                    <a href="#" class="solution-link">Đăng ký học thử →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: FEATURE HIGHLIGHT -->
+    <section class="section-padding features">
+        <div class="container">
+            <!-- Row 1 -->
+            <div class="feature-row reveal">
+                <div class="feature-content">
+                    <span class="section-tag">Tại sao chọn Edify?</span>
+                    <h3>Học thực chiến trên tài khoản thật</h3>
+                    <p>Không còn lý thuyết suông. Học viên được cấp quyền truy cập vào các tài khoản quảng cáo Agency (TK Clean) để thực hành ngay trong quá trình học.</p>
+                    <ul class="feature-list">
+                        <li><span class="check-icon">✓</span> Tài khoản TikTok Ads/Facebook Ads ổn định</li>
+                        <li><span class="check-icon">✓</span> Ngân sách thực tế để test campain</li>
+                        <li><span class="check-icon">✓</span> Xử lý tình huống chết TK, checkpoint</li>
+                    </ul>
+                </div>
+                <div class="feature-visual">
+                    <div class="feature-icon-large">🛡️</div>
+                </div>
+            </div>
+
+            <!-- Row 2 (Reverse) -->
+            <div class="feature-row reverse reveal">
+                <div class="feature-content">
+                    <span class="section-tag">Hỗ trợ chuyên sâu</span>
+                    <h3>Mentoring 1-1 & Cộng đồng Elite</h3>
+                    <p>Kết nối trực tiếp với các chuyên gia đầu ngành đang chạy chiến dịch lớn. Tham gia cộng đồng kín chia sẻ case study và tool độc quyền.</p>
+                    <ul class="feature-list">
+                        <li><span class="check-icon">✓</span> Review tài khoản & chiến dịch trực tiếp</li>
+                        <li><span class="check-icon">✓</span> Cập nhật thuật toán mới nhất hàng tuần</li>
+                        <li><span class="check-icon">✓</span> Networking với 5000+ Marketer</li>
+                    </ul>
+                </div>
+                <div class="feature-visual">
+                    <div class="feature-icon-large">🤝</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: COURSE PREVIEW -->
+    <section class="section-padding courses" id="khoa-hoc">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <span class="section-tag">Đào Tạo Chuyên Sâu</span>
+                <h2 class="section-title">Các khóa học nổi bật</h2>
+                <p class="section-desc">Lộ trình bài bản từ cơ bản đến nâng cao, phù hợp cho mọi đối tượng.</p>
+            </div>
+
+            <div class="course-grid">
+                <!-- Course 1 -->
+                <div class="course-card reveal">
+                    <div class="course-thumb" style="background: linear-gradient(135deg, #000000, #25F4EE); color: white;">
+                        🎵
+                        <span class="course-badge hot">Best Seller</span>
+                    </div>
+                    <div class="course-body">
+                        <span class="course-cat">TikTok Marketing</span>
+                        <h3 class="course-title">TikTok Ads Masterclass 2026: Từ Zero đến Hero</h3>
+                        <div class="course-meta">
+                            <span class="course-level">⏱️ 12 Buổi</span>
+                            <span class="course-price">4.990.000₫</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="course-card reveal">
+                    <div class="course-thumb" style="background: linear-gradient(135deg, #1877F2, #42b72a); color: white;">
+                        👍
+                        <span class="course-badge">Cơ Bản</span>
+                    </div>
+                    <div class="course-body">
+                        <span class="course-cat">Facebook Ads</span>
+                        <h3 class="course-title">Facebook Ads Thực Chiến: Tối Ưu Chi Phí & Scale</h3>
+                        <div class="course-meta">
+                            <span class="course-level">⏱️ 10 Buổi</span>
+                            <span class="course-price">3.990.000₫</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="course-card reveal">
+                    <div class="course-thumb" style="background: linear-gradient(135deg, #FF0050, #00F2EA); color: white;">
+                        ✍️
+                        <span class="course-badge">Nâng Cao</span>
+                    </div>
+                    <div class="course-body">
+                        <span class="course-cat">Content Strategy</span>
+                        <h3 class="course-title">Nghệ Thuật Viết Content Chuyển Đổi Cao (Conversion Copywriting)</h3>
+                        <div class="course-meta">
+                            <span class="course-level">⏱️ 8 Buổi</span>
+                            <span class="course-price">2.490.000₫</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 48px;">
+                <a href="#" class="btn btn-outline">Xem Tất Cả Khóa Học</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: SOCIAL PROOF -->
+    <section class="section-padding social-proof">
+        <div class="container reveal">
+            <div class="section-header text-center">
+                <span class="section-tag">Uy Tín Tạo Nên Thương Hiệu</span>
+                <h2 class="section-title">Đối tác & Học viên nói gì?</h2>
+            </div>
+
+            <div class="logo-grid">
+                <div class="partner-logo">UNILEVER</div>
+                <div class="partner-logo">SHOPEE</div>
+                <div class="partner-logo">TIKI</div>
+                <div class="partner-logo">LAZADA</div>
+                <div class="partner-logo">MASAN</div>
+            </div>
+
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"Sau khóa học TikTok Ads tại Edify, doanh thu shop tôi tăng 300% chỉ sau 1 tháng. Cách giảng dạy rất thực tế, không lý thuyết sáo rỗng."</p>
+                    <div class="author">
+                        <div class="avatar">TN</div>
+                        <div class="author-info">
+                            <h4>Nguyễn Văn A</h4>
+                            <p>CEO Brand Thời Trang Local</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"Dịch vụ Agency của Edify rất chuyên nghiệp. Team hỗ trợ 24/7, xử lý sự cố nhanh chóng. ROAS luôn duy trì ở mức 4.0+."</p>
+                    <div class="author">
+                        <div class="avatar">HL</div>
+                        <div class="author-info">
+                            <h4>Trần Thị B</h4>
+                            <p>Marketing Director, F&B Chain</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"Môi trường học tập tuyệt vời. Được mentor 1-1 giúp tôi sửa lỗi sai ngay lập tức. Đáng đồng tiền bát gạo!"</p>
+                    <div class="author">
+                        <div class="avatar">MD</div>
+                        <div class="author-info">
+                            <h4>Lê Minh D</h4>
+                            <p>Freelancer Marketer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: CTA -->
+    <section class="cta-section">
+        <div class="cta-glow"></div>
+        <div class="cta-content reveal">
+            <h2 class="cta-title">Sẵn sàng bứt phá doanh thu?</h2>
+            <p class="cta-desc">Đăng ký ngay hôm nay để nhận tư vấn lộ trình miễn phí và ưu đãi 20% cho khóa học đầu tiên.</p>
+            <div class="cta-btn-group">
+                <a href="#" class="btn btn-white">Đăng Ký Tư Vấn</a>
+                <a href="#" class="btn btn-glass">Liên Hệ Hợp Tác</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-col footer-brand">
+                    <a href="#" class="logo" style="margin-bottom: 16px; display: inline-flex;">
+                        <div class="logo-mark"><span class="logo-mark-inner">E</span></div>
+                        <div class="logo-text">
+                            <span class="logo-name" style="color: white;">Edify Labs</span>
+                            <span class="logo-tagline" style="color: var(--gray-400);">Knowledge to Execution</span>
+                        </div>
+                    </a>
+                    <p class="footer-desc">Hệ sinh thái đào tạo thực chiến và giải pháp marketing toàn diện, giúp cá nhân và doanh nghiệp tối ưu hóa hiệu suất kinh doanh trên nền tảng số.</p>
+                    <div class="footer-contact">
+                        <p>📍 Tầng 4, Tòa nhà Innovation, TP.HCM</p>
+                        <p>📞 0987.654.321</p>
+                        <p>✉️ hello@edifylabs.vn</p>
+                    </div>
+                </div>
+
                 <div class="footer-col">
-                    <h5>Liên Kết</h5>
-                    <ul>
-                        <li><a href="#about">Về chúng tôi</a></li>
-                        <li><a href="#services">Dịch vụ</a></li>
-                        <li><a href="#">Tin tức</a></li>
-                        <li><a href="#">Tuyển dụng</a></li>
+                    <h4 class="footer-title">Dịch Vụ</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Performance Agency</a></li>
+                        <li><a href="#">Production Studio</a></li>
+                        <li><a href="#">E-Learning Platform</a></li>
+                        <li><a href="#">Thuê TK TikTok Ads</a></li>
+                        <li><a href="#">Thuê TK Facebook Ads</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
-                    <h5>Liên Hệ</h5>
-                    <ul>
-                        <li>Hà Nội, Việt Nam</li>
-                        <li>contact@edifylabs.vn</li>
-                        <li>+84 900 000 000</li>
+                    <h4 class="footer-title">Giải Pháp</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Dành cho Cá nhân</a></li>
+                        <li><a href="#">Dành cho Doanh nghiệp SME</a></li>
+                        <li><a href="#">Dành cho Trường học</a></li>
+                        <li><a href="#">Hệ thống Chứng nhận</a></li>
                     </ul>
                 </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Đăng ký nhận tin</h4>
+                    <p class="footer-desc" style="margin-top: 0;">Nhận ngay các chiến lược tăng trưởng và ưu đãi khóa học mới nhất từ Edify Labs.</p>
+                    <form class="footer-newsletter">
+                        <input type="email" placeholder="Nhập email của bạn..." required>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 12px;">Đăng Ký Ngay</button>
+                    </form>
+                </div>
             </div>
-            
-            <div class="copyright">
-                <p>&copy; 2026 Edify Labs. All rights reserved.</p>
+
+            <div class="footer-bottom">
+                <div class="copyright">
+                    &copy; 2026 Edify Labs. All rights reserved.
+                </div>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook">FB</a>
+                    <a href="#" aria-label="TikTok">TK</a>
+                    <a href="#" aria-label="YouTube">YT</a>
+                    <a href="#" aria-label="LinkedIn">IN</a>
+                </div>
+                <div class="footer-legal">
+                    <a href="#">Điều khoản</a> &nbsp;|&nbsp; <a href="#">Bảo mật</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <script>
+        // Hiệu ứng Header khi Scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 20) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        // Toggle Dropdown
+        function toggleDropdown(id) {
+            const item = document.getElementById('nav-' + id);
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('open'));
+            if (!isOpen) item.classList.add('open');
+        }
+
+        // Đóng dropdown khi click ngoài
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-item')) {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('open'));
+            }
+        });
+
+        // Scroll Reveal Animation
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+
+            reveals.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        // Trigger once on load
+        revealOnScroll();
+    </script>
 </body>
 </html>
