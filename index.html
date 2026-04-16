@@ -1,23 +1,503 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KLM9KFJ5');</script>
-    <!-- End Google Tag Manager -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edify Labs MVP</title>
-  </head>
-  <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLM9KFJ5"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edify Labs - Kiến Tạo Tương Lai Giáo Dục</title>
+    <meta name="description" content="Edify Labs - Đối tác chuyển đổi số giáo dục hàng đầu. Giải pháp công nghệ toàn diện cho trường học và doanh nghiệp đào tạo.">
+    
+    <!-- 1. Brand Font (Bắt buộc) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    
+    <style>
+        /* 2. Hệ thống màu sắc (CSS Tokens) */
+        :root {
+            --navy: #0F1F3D;
+            --navy-mid: #1A3260;
+            --electric: #2563EB;
+            --electric-glow: #3B82F6;
+            --teal: #0D9488;
+            --white: #FFFFFF;
+            --off-white: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-600: #475569;
+            --gray-800: #1E293B;
+            
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--off-white);
+            color: var(--gray-800);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Typography Utilities */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--navy);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--electric) 0%, var(--teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Buttons (Style Guide) */
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--electric);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--navy-mid);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--electric);
+            color: var(--electric);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--electric);
+            color: var(--white);
+        }
+
+        /* Header / Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 15px 0;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+        }
+        
+        .logo span { color: var(--electric); }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--electric);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(13, 148, 136, 0.08), transparent 40%);
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--navy);
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Services Section */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--gray-600);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            padding: 40px 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--electric-glow);
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            color: var(--electric);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        /* Why Us Section */
+        .why-us {
+            background-color: var(--navy);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-us::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .why-us h2 { color: var(--white); }
+        .why-us p { color: var(--gray-200); }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .feature-item {
+            text-align: left;
+        }
+
+        .feature-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.1);
+            line-height: 1;
+            margin-bottom: -20px;
+            display: block;
+        }
+
+        .feature-item h3 {
+            color: var(--electric-glow);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .feature-item p {
+            color: var(--gray-200);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--gray-800);
+            color: var(--gray-200);
+            padding: 60px 0 30px;
+            font-size: 0.9rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h4 {
+            color: var(--white);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+            max-width: 300px;
+        }
+
+        .footer-col h5 {
+            color: var(--white);
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--electric-glow);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            text-align: center;
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Mobile menu simplified for demo */
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            .hero-buttons { flex-direction: column; }
+            .btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">Edify<span>Labs</span></a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#about">Về chúng tôi</a></li>
+                    <li><a href="#services">Giải pháp</a></li>
+                    <li><a href="#projects">Dự án</a></li>
+                    <li><a href="#contact">Liên hệ</a></li>
+                </ul>
+            </nav>
+            <a href="#contact" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Tư vấn ngay</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Kiến Tạo Tương Lai <br><span class="text-gradient">Giáo Dục Số</span></h1>
+                <p>Edify Labs đồng hành cùng các tổ chức giáo dục chuyển đổi số toàn diện. Chúng tôi cung cấp giải pháp công nghệ tiên tiến, tối ưu hóa trải nghiệm học tập và quản lý.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Bắt đầu dự án</a>
+                    <a href="#services" class="btn btn-outline">Khám phá giải pháp</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Giải Pháp Toàn Diện</h2>
+                <p>Công nghệ cốt lõi giúp nâng tầm chất lượng đào tạo và vận hành.</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card glass-card">
+                    <div class="icon-box">🎓</div>
+                    <h3>Hệ thống LMS</h3>
+                    <p>Nền tảng quản lý học tập linh hoạt, hỗ trợ đa dạng mô hình đào tạo trực tuyến và kết hợp (Blended Learning).</p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card glass-card">
+                    <div class="icon-box">📱</div>
+                    <h3>Mobile App Education</h3>
+                    <p>Ứng dụng di động tùy chỉnh, kết nối nhà trường, phụ huynh và học sinh mọi lúc, mọi nơi.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card glass-card">
+                    <div class="icon-box">⚡</div>
+                    <h3>Chuyển Đổi Số</h3>
+                    <p>Tư vấn và triển khai quy trình số hóa toàn diện, từ tuyển sinh, giảng dạy đến quản trị nhân sự.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="about" class="section why-us">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tại Sao Chọn Edify Labs?</h2>
+                <p style="color: var(--gray-200);">Chúng tôi không chỉ viết code, chúng tôi kiến tạo giá trị bền vững.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-number">01</span>
+                    <h3>Công Nghệ Hiện Đại</h3>
+                    <p>Sử dụng các stack công nghệ mới nhất đảm bảo hiệu năng, bảo mật và khả năng mở rộng.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-number">02</span>
+                    <h3>Am Hiểu Giáo Dục</h3>
+                    <p>Đội ngũ chuyên gia có kinh nghiệm sâu sắc trong lĩnh vực EdTech và quy trình sư phạm.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-number">03</span>
+                    <h3>Tận Tâm & Trách Nhiệm</h3>
+                    <p>Cam kết đồng hành cùng khách hàng trong suốt vòng đời sản phẩm với dịch vụ hỗ trợ 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>Edify Labs</h4>
+                    <p>Đối tác tin cậy trong hành trình chuyển đổi số giáo dục tại Việt Nam.</p>
+                    <div style="margin-top: 20px;">
+                        <!-- Social placeholders -->
+                        <a href="#" style="margin-right: 15px; font-weight: 600;">Facebook</a>
+                        <a href="#" style="margin-right: 15px; font-weight: 600;">LinkedIn</a>
+                        <a href="#" style="font-weight: 600;">Email</a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h5>Liên Kết</h5>
+                    <ul>
+                        <li><a href="#about">Về chúng tôi</a></li>
+                        <li><a href="#services">Dịch vụ</a></li>
+                        <li><a href="#">Tin tức</a></li>
+                        <li><a href="#">Tuyển dụng</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Liên Hệ</h5>
+                    <ul>
+                        <li>Hà Nội, Việt Nam</li>
+                        <li>contact@edifylabs.vn</li>
+                        <li>+84 900 000 000</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 Edify Labs. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
 </html>
