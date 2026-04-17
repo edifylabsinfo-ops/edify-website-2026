@@ -25,3 +25,6 @@ Trước khi trả lời bất kỳ câu hỏi nào, bạn BẮT BUỘC phải n
 - **Design Tokens:** Sử dụng các biến màu/font tại `[[skills/DESIGN_TOKENS.json]]`.
 - **Kết nối Dữ liệu:** Sử dụng kỹ năng tại `[[skills/DATA_BRIDGE_SKILL.md]]`.
 - **Quản trị Hình ảnh:** Tuân thủ hướng dẫn tại `[[docs/business/ASSET_CURATION_LOG.md]]`.
+- **Phong cách ngôn từ:** Tuân thủ `[[docs/business/COPYWRITING_STYLE_GUIDE.md]]`.
+- **Mẫu thiết kế Code:** Tham chiếu `[[skills/TECHNICAL_DESIGN_PATTERNS.md]]`.
+- **Dữ liệu chiến dịch:** Đọc `[[docs/business/CAMPAIGN_DOSSIER_STREAMER.md]]` khi làm về khóa học Streamer.
