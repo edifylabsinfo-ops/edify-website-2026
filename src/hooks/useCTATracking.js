@@ -1,34 +1,46 @@
 import { useCallback } from 'react';
 
 /**
- * useCTATracking — Vũ khí tối thượng của Edify Labs
- * Dùng để bắn dữ liệu sang Meta Pixel và GTM cùng lúc.
+ * useCTATracking — Phiên bản "Chống mọi loại lỗi Build"
+ * Tuân thủ nghiêm ngặt chuẩn Performance & Clean Code.
  */
 export function useCTATracking() {
-  const track = useCallback(({ 
-    eventName = 'Lead', 
-    gtmEvent = 'cta_click', 
-    value, 
-    currency = 'VND', 
-    label 
-  }) => {
+  const track = useCallback((options) => {
+    // 🛡️ Chốt chặn 1: Kiểm tra môi trường Browser
     if (typeof window === 'undefined') return;
 
-    // 1. Meta Pixel Tracking
+    const { 
+      eventName = 'Lead', 
+      gtmEvent = 'cta_click', 
+      value, 
+      currency = 'VND', 
+      label 
+    } = options;
+
+    // 1. Meta Pixel Tracking (Sử dụng cách gọi an toàn tuyệt đối)
     if (typeof window.fbq === 'function') {
-      window.fbq('track', eventName, {
-        ...(value !== undefined && { value, currency }),
-        ...(label && { content_name: label }),
-      });
+      const fbParams = {};
+      if (value !== undefined && value !== null) {
+        fbParams.value = value;
+        fbParams.currency = currency;
+      }
+      if (label) {
+        fbParams.content_name = label;
+      }
+      window.fbq('track', eventName, fbParams);
     }
 
     // 2. GTM dataLayer Tracking
     if (Array.isArray(window.dataLayer)) {
-      window.dataLayer.push({
-        event: gtmEvent,
-        ...(value !== undefined && { value, currency }),
-        ...(label && { plan: label }),
-      });
+      const gtmParams = { event: gtmEvent };
+      if (value !== undefined && value !== null) {
+        gtmParams.value = value;
+        gtmParams.currency = currency;
+      }
+      if (label) {
+        gtmParams.plan = label;
+      }
+      window.dataLayer.push(gtmParams);
     }
   }, []);
 
