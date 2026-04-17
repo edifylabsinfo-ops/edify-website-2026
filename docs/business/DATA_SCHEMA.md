@@ -16,13 +16,15 @@
 
 ## 2. Chuẩn Hóa Tracking Event
 Mọi component có tính tương tác cao (Nút mua, Điền form, Xem video) phải bắn data theo đúng Schema này xuống DataLayer:
-```javascript
 {
-  event: 'edify_conversion',
-  action_type: 'click' | 'submit' | 'view',
-  target_id: 'tên_gói_dịch_vụ_hoặc_nút', // VD: 'edify_partner'
-  value: 15000000, // Để dạng số nguyên, không có dấu phẩy
-  currency: 'VND'
+  "id": "edify_partner_contact",
+  "name": "Edify Partner",
+  "price": null, // OFF mức giá
+  "cta_text": "Liên Hệ Ngay",
+  "tracking": {
+    "pixel_event": "Contact", // Đổi sang Contact
+    "gtm_event": "cta_click_contact"
+  }
 }
 
 
