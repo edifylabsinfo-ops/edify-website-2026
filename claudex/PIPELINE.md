@@ -48,6 +48,7 @@ Checklist bắt buộc:
 - [ ] Không có hardcode màu ngoài brand palette?
 - [ ] Không có `console.log` thừa?
 - [ ] Đã xử lý edge case cơ bản (empty state, loading)?
+- [ ] 100% typography sử dụng font Montserrat? (Tự động reject nếu có Garamond/Serif/Mono).
 
 ## Step 8 — OUTPUT (Trình bày kết quả)
 Cấu trúc trình bày cố định:
