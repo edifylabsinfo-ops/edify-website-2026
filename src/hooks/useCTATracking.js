@@ -19,3 +19,14 @@ const PricingCardContact = () => {
     // ... nội dung JSX của sếp
   );
 };
+const utms = useUTM(); // Lấy "nguồn" khách
+const { track } = useCTATracking(); // Lấy "vũ khí" bắn data
+
+const handleRegister = () => {
+  track({
+    eventName: 'Lead',
+    label: 'Edify Partner',
+    // Nhúng luôn UTM vào tracking để Facebook/GTM biết khách từ đâu tới
+    metadata: { ...utms } 
+  });
+};
