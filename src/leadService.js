@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase';
+import { supabase } from './lib/supabase';
 
 /**
  * submitLead — Nhiệm vụ: Ghi danh khách hàng vào hệ thống
