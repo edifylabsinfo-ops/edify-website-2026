@@ -14,33 +14,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Bước 1: Kéo code từ repository về máy chủ GitHub Actions
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+      # Bước 2: Cài đặt môi trường Node.js 18
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    
+      # Bước 3: Cài đặt toàn bộ thư viện cần thiết
+      - name: Install dependencies
+        run: npm install
 
-    steps:
-    # Bước 1: Kéo code từ repository về máy chủ GitHub Actions
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    # Bước 2: Cài đặt môi trường Node.js 18 (Bắt buộc cho Vite)
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18.x
-        
-    # Bước 3: Cài đặt toàn bộ thư viện cần thiết
-    - name: Install dependencies
-      run: npm install
-      
-    # Bước 4: Chạy thử lệnh Build. Nếu code có lỗi ngoặc/lỗi cú pháp, bước này sẽ báo Error (Đỏ).
-    - name: Test Build (Vite)
-      run: npm run build
+      # Bước 4: Chạy thử lệnh Build. 
+      - name: Test Build (Vite)
+        run: npm run build
