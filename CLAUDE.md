@@ -28,3 +28,5 @@ Trước khi trả lời bất kỳ câu hỏi nào, bạn BẮT BUỘC phải n
 - **Phong cách ngôn từ:** Tuân thủ `[[docs/business/COPYWRITING_STYLE_GUIDE.md]]`.
 - **Mẫu thiết kế Code:** Tham chiếu `[[skills/TECHNICAL_DESIGN_PATTERNS.md]]`.
 - **Dữ liệu chiến dịch:** Đọc `[[docs/business/CAMPAIGN_DOSSIER_STREAMER.md]]` khi làm về khóa học Streamer.
+- **Chiến lược Funnel:** Điều hướng theo `[[docs/business/FUNNEL_MAP_STRATEGY.md]]`.
+- **Bố cục UX/UI:** Áp dụng các mẫu tại `[[skills/UX_UI_CONVERSION_PATTERNS.md]]`.
