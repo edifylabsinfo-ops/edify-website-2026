@@ -21,3 +21,5 @@ Trước khi trả lời bất kỳ câu hỏi nào, bạn BẮT BUỘC phải n
 - Lệnh `/save_session`: Tóm tắt toàn bộ quyết định kỹ thuật của phiên chat hiện tại.
 
 **> Sẵn sàng nhận lệnh. Trạng thái: MAXPING.**
+- **SEO & Social:** Đọc `[[docs/business/SEO_GROWTH_CHECKLIST.md]]` để cấu hình Head tags.
+- **Design Tokens:** Sử dụng các biến màu/font tại `[[skills/DESIGN_TOKENS.json]]`.
