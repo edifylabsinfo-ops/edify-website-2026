@@ -59,3 +59,15 @@ Cấu trúc trình bày cố định:
 [Tracking]      → Event đã gắn hoặc TODO hook
 [How to use]    → 1-3 dòng import/usage — không hơn
 ```
+## 🛡️ AGENT HOOKS (Hàng rào Middleware)
+
+### PRE_ACT_HOOK: Brand Consistency Scan
+Trước khi thực thi Step 5 (ACT), Agent phải chạy hook kiểm tra:
+- Kiểm tra lại `SOUL.md`: Có dùng font Montserrat không? Có dùng màu ngoài bảng màu không?
+- Nếu vi phạm -> Block hành động và báo lỗi: `BRAND_GUARD_VIOLATION`.
+
+### POST_ACT_HOOK: Tracking Validation
+Sau khi code xong, Agent chạy hook kiểm tra:
+- Có sự kiện `fbq('track')` cho các nút CTA không?
+- Có sự kiện `dataLayer.push` cho GTM không?
+- Nếu thiếu -> Yêu cầu bổ sung ngay lập tức.
