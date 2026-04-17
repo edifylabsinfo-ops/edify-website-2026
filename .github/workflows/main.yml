@@ -1,5 +1,19 @@
 name: CI/CD Code Check
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' 
 on:
   push:
     branches: [ "main" ]
@@ -9,6 +23,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
 
     steps:
     # Bước 1: Kéo code từ repository về máy chủ GitHub Actions
