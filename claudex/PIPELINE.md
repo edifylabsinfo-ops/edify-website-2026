@@ -59,15 +59,15 @@ Cấu trúc trình bày cố định:
 [Tracking]      → Event đã gắn hoặc TODO hook
 [How to use]    → 1-3 dòng import/usage — không hơn
 ```
-## 🛡️ AGENT HOOKS (Hàng rào Middleware)
+### 🛡️ AGENT HOOKS V2 (Bảo vệ & Tự chữa lành)
 
-### PRE_ACT_HOOK: Brand Consistency Scan
-Trước khi thực thi Step 5 (ACT), Agent phải chạy hook kiểm tra:
-- Kiểm tra lại `SOUL.md`: Có dùng font Montserrat không? Có dùng màu ngoài bảng màu không?
-- Nếu vi phạm -> Block hành động và báo lỗi: `BRAND_GUARD_VIOLATION`.
+**1. POST_ACT_HOOK: Tracking & Brand Validation**
+Sau khi [Frontend Dev] nhả code, Agent phải chạy hook kiểm tra ngầm:
+- Check màu sắc (Chỉ cho phép `#163020`, `#EEF0E5`, `#304D30`).
+- Check font (Chỉ cho phép `Montserrat`).
+- Check Tracking (`fbq`, `dataLayer`).
 
-### POST_ACT_HOOK: Tracking Validation
-Sau khi code xong, Agent chạy hook kiểm tra:
-- Có sự kiện `fbq('track')` cho các nút CTA không?
-- Có sự kiện `dataLayer.push` cho GTM không?
-- Nếu thiếu -> Yêu cầu bổ sung ngay lập tức.
+**2. SELF_HEALING_PROTOCOL (Kích hoạt nếu Hook 1 báo lỗi)**
+- TUYỆT ĐỐI KHÔNG in ra code lỗi rồi xin lỗi User (Ví dụ: "Xin lỗi sếp tôi quên gắn tracking...").
+- Nếu phát hiện thiếu Tracking hoặc sai Font -> Hệ thống ngầm tự động quay lại **Step 5 (ACT)**. Tự sửa lại code cho đúng 100% rồi mới in kết quả cuối cùng ra ở **Step 8**.
+- Output phải sạch sẽ: Chạy được ngay, không kèm những lời giải thích lấp liếm.
