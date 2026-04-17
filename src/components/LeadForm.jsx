@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useUTM } from '../hooks/useUTM';
 import { useCTATracking } from '../hooks/useCTATracking';
-import { submitLead } from '../services/leadService';
+import { submitLead } from '../leadService'; // ✅ Fix: Đưa về đúng thư mục src/
 import SuccessScreen from './SuccessScreen';
 
 export default function LeadForm({ campaignName = "Edify Partner" }) {
@@ -24,8 +24,12 @@ export default function LeadForm({ campaignName = "Edify Partner" }) {
 
     track({ eventName: 'Lead', label: campaignName });
     const response = await submitLead(payload);
-    if (response.success) setIsSuccess(true);
-    else alert("Lỗi gửi dữ liệu. Sếp thử lại nhé!");
+    
+    if (response.success) {
+      setIsSuccess(true);
+    } else {
+      alert("Lỗi gửi dữ liệu. Sếp kiểm tra lại kết nối Supabase nhé!");
+    }
     setLoading(false);
   };
 
