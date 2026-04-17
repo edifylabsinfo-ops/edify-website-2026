@@ -16,6 +16,7 @@
 
 ## 2. Chuẩn Hóa Tracking Event
 Mọi component có tính tương tác cao (Nút mua, Điền form, Xem video) phải bắn data theo đúng Schema này xuống DataLayer:
+
 {
   "id": "edify_partner_contact",
   "name": "Edify Partner",
