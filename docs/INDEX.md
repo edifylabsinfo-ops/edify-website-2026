@@ -14,3 +14,4 @@
 ## 3. Tech Stack & Tracking
 - `[[Tech_Stack]]`: React 19, Tailwind CSS 4, Vite.
 - `[[Tracking_Rules]]`: Meta Pixel (`fbq`), GTM (`dataLayer`). Bắt buộc trên mọi nút CTA.
+- [[edify_partner_data]]: (File JSON) — Chứa dữ liệu bảng giá, tracking và quyền lợi của gói Edify Partner.
