@@ -17,3 +17,9 @@ Mọi component có tính tương tác cao (Nút mua, Điền form, Xem video) p
   value: 15000000, // Để dạng số nguyên, không có dấu phẩy
   currency: 'VND'
 }
+## 4. Environment Variables & API Calls
+- **Nền tảng:** Sử dụng Vite, do đó BẮT BUỘC gọi biến môi trường bằng cú pháp `import.meta.env.VITE_...` (TUYỆT ĐỐI KHÔNG dùng `process.env`).
+- **Supabase Clients:** Khởi tạo Supabase client chuẩn phải lấy từ 2 biến đã khai báo trong `.env.example`:
+  + `VITE_SUPABASE_URL`
+  + `VITE_SUPABASE_ANON_KEY`
+- Không được hardcode bất kỳ URL hay API Key nào trực tiếp vào file `.jsx` / `.ts`.
