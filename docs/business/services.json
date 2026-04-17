@@ -1,0 +1,10 @@
+{
+  "id": "edify_partner_contact",
+  "name": "Edify Partner",
+  "price": null, // OFF mức giá
+  "cta_text": "Liên Hệ Ngay",
+  "tracking": {
+    "pixel_event": "Contact", // Đổi sang Contact
+    "gtm_event": "cta_click_contact"
+  }
+}
