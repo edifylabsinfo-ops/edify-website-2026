@@ -3,7 +3,7 @@ import { useCTATracking } from '../hooks/useCTATracking';
 
 export default function SuccessScreen() {
   const { track } = useCTATracking();
-  const ZALO_LINK = "https://zalo.me/g/your_group_id"; // <--- Thay link Zalo của sếp ở đây
+  const ZALO_LINK = "https://zalo.me/691204985516497917";
 
   useEffect(() => {
     track({
