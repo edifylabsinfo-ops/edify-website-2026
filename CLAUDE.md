@@ -23,3 +23,5 @@ Trước khi trả lời bất kỳ câu hỏi nào, bạn BẮT BUỘC phải n
 **> Sẵn sàng nhận lệnh. Trạng thái: MAXPING.**
 - **SEO & Social:** Đọc `[[docs/business/SEO_GROWTH_CHECKLIST.md]]` để cấu hình Head tags.
 - **Design Tokens:** Sử dụng các biến màu/font tại `[[skills/DESIGN_TOKENS.json]]`.
+- **Kết nối Dữ liệu:** Sử dụng kỹ năng tại `[[skills/DATA_BRIDGE_SKILL.md]]`.
+- **Quản trị Hình ảnh:** Tuân thủ hướng dẫn tại `[[docs/business/ASSET_CURATION_LOG.md]]`.
