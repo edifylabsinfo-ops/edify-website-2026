@@ -1,29 +1,23 @@
 import { useMemo } from 'react';
 
 /**
- * useUTM — Trình đánh dấu nguồn khách hàng
- * Bulletproof cho cả môi trường SSR (Next.js/Vite SSR)
+ * useUTM — Phiên bản "Nồi đồng cối đá"
+ * Chống lỗi Linter, chống lỗi SSR, chống lỗi Version.
  */
 export const useUTM = () => {
   const utms = useMemo(() => {
-    // 🛡️ Kiểm tra an toàn cho môi trường Server-side
     if (typeof window === 'undefined') return {};
 
     const params = new URLSearchParams(window.location.search);
+    const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
     
-    // Chỉ lấy ra khi có dữ liệu, tránh tạo object rác toàn null
-    const utmObject = {
-      utm_source: params.get("utm_source"),
-      utm_medium: params.get("utm_medium"),
-      utm_campaign: params.get("utm_campaign"),
-      utm_content: params.get("utm_content"),
-      utm_term: params.get("utm_term"),
-    };
-
-    // Lọc bỏ các key bị null để data gửi về Database/Tracking "sạch" nhất
-    return Object.fromEntries(
-      Object.entries(utmObject).filter(([_, v]) => v != null)
-    );
+    return keys.reduce((acc, key) => {
+      const value = params.get(key);
+      if (value !== null && value !== undefined) {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
   }, []);
 
   return utms;
