@@ -22,3 +22,20 @@ export const useUTM = () => {
 
   return utms;
 };
+// 1. Thêm import
+import { useUTM } from '../hooks/useUTM';
+
+const PricingCardContact = () => {
+  const { track } = useCTATracking();
+  const utms = useUTM(); // 2. Lấy "mắt thần" UTM
+
+  const handleContact = () => {
+    track({
+      eventName: 'Contact',
+      gtmEvent: 'cta_click_contact',
+      label: 'Edify Partner',
+      metadata: { ...utms } // 3. Đính kèm UTM vào tracking
+    });
+    // ...
+  };
+  // ...
