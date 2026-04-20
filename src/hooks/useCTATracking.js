@@ -1,23 +1,23 @@
 import { useCallback } from 'react';
 
 /**
- * useCTATracking — Phiên bản "Chống mọi loại lỗi Build"
- * Tuân thủ nghiêm ngặt chuẩn Performance & Clean Code.
+ * useCTATracking - Phiên bản bọc thép (Safe-Mode)
+ * Ngăn chặn tuyệt đối lỗi undefined khi gọi hàm.
  */
 export function useCTATracking() {
-  const track = useCallback((options) => {
-    // 🛡️ Chốt chặn 1: Kiểm tra môi trường Browser
+  const track = useCallback((options = {}) => { // ✅ Fix: Thêm = {} để chống lỗi undefined
+    // Chốt chặn 1: Kiểm tra môi trường Browser
     if (typeof window === 'undefined') return;
 
-    const { 
-      eventName = 'Lead', 
-      gtmEvent = 'cta_click', 
-      value, 
-      currency = 'VND', 
-      label 
+    const {
+      eventName = 'Lead',
+      gtmEvent = 'cta_click',
+      value,
+      currency = 'VND',
+      label
     } = options;
 
-    // 1. Meta Pixel Tracking (Sử dụng cách gọi an toàn tuyệt đối)
+    // 1. Meta Pixel Tracking
     if (typeof window.fbq === 'function') {
       const fbParams = {};
       if (value !== undefined && value !== null) {
@@ -38,7 +38,7 @@ export function useCTATracking() {
         gtmParams.currency = currency;
       }
       if (label) {
-        gtmParams.plan = label;
+        gtmParams.label = label;
       }
       window.dataLayer.push(gtmParams);
     }
