@@ -1,5 +1,5 @@
 import React from 'react';
-import LeadForm from '../components/LeadForm'; // Đảm bảo đúng đường dẫn tới LeadForm
+import LeadForm from './components/LeadForm';
 
 export default function Home() {
   return (
