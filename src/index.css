@@ -9,28 +9,23 @@
   --sage-mist: #B6C4B6;
 }
 
-/* Reset chuẩn Cinematic */
 body {
-  margin: 0;
-  padding: 0;
   font-family: 'Montserrat', sans-serif;
   background-color: var(--soft-cream);
   color: var(--deep-forest);
+  margin: 0;
   overflow-x: hidden;
-  line-height: 1.5;
 }
 
-/* Khung xương chuẩn 1440px */
+/* Khung xương chuẩn 1440px sếp cần */
 .container-std {
   width: 100%;
   max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 40px;
-  padding-right: 40px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
-/* Hiệu ứng trồi lên (Reveal) */
+/* Hiệu ứng Reveal (Trồi lên) chuẩn source gốc */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -41,10 +36,10 @@ body {
   transform: translateY(0);
 }
 
-/* Fix CSS cho Topbar & Header */
-.topbar { background-color: var(--deep-forest); height: 36px; }
-header.scrolled { background-color: rgba(238, 240, 229, 0.97); }
+/* Giữ nguyên các class layout cũ để không vỡ trận */
+.topbar { background-color: var(--deep-forest); height: 36px; color: white; }
+header.scrolled { background-color: rgba(238, 240, 229, 0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--sage-mist); }
 
 @media (max-width: 768px) {
-  .container-std { padding-left: 20px; padding-right: 20px; }
+  .container-std { padding: 0 20px; }
 }
