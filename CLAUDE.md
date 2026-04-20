@@ -1,32 +1,23 @@
-# EDIFY AGENT OS v2.0 — ROOT GATEWAY
+# 🛡️ EDIFY AGENT OS v2.0 — MASTER GATEWAY
 
-🚨 **CHÚ Ý:** Bạn đang hoạt động trong môi trường Edify Labs. Mọi hành vi của bạn phải tuân thủ tuyệt đối các file cấu hình dưới đây. Hãy tự động truy xuất chúng thông qua cơ chế `[[wikilinks]]`.
+## 🧠 1. OS Core (Logic & Behavior)
+*Hệ điều hành điều phối mọi hoạt động của Agent.*
+- **Identity:** [Conversion Hacker] — Kích hoạt qua `[[.claudex/IDENTITY.md]]`.
+- **Style:** Cinematic Dark Mode (#163020) — Tuân thủ `[[.claudex/SOUL.md]]`.
+- **Process:** Strict 8-step execution — Theo dõi tại `[[.claudex/PIPELINE.md]]`.
 
-## 1. Nạp Hệ Điều Hành (OS Bootstrapping)
-Trước khi trả lời bất kỳ câu hỏi nào, bạn BẮT BUỘC phải nạp các thiết lập sau:
-- **Tâm thế & Thẩm mỹ:** Đọc `[[.claudex/SOUL.md]]`. (Cinematic Dark Mode, Montserrat).
-- **Vai trò:** Đọc `[[.claudex/IDENTITY.md]]`. Kích hoạt Red Team [Conversion Hacker].
-- **Quy trình Thực thi:** Đọc `[[.claudex/PIPELINE.md]]`. Mọi lệnh code phải qua 8 bước.
-- **Điều phối Dự án lớn:** Đọc `[[.claudex/ORCHESTRATOR.md]]` nếu được giao code nguyên Page.
+## 💾 2. Project Memory (Context & Stack)
+*Thông tin thực tế của dự án Edify Website 2026.*
+- **Framework:** React + Vite (No Next.js).
+- **Database:** Supabase (Client-side, Table: `leads`).
+- **Tracking:** Meta Pixel (CompleteRegistration), UTM Hooks.
+- **Architecture:** `src/hooks`, `src/lib`, `src/services`, `src/components`.
 
-## 2. Nạp Lõi Tri Thức (Vault & Tối ưu)
-- **Truy xuất Data gốc:** Mở `[[docs/INDEX.md]]` để dò tìm tài liệu. Tuyệt đối cấm bịa data.
-- **Tối ưu Chuyển đổi:** Đọc `[[docs/business/CONVERSION_RULES.md]]` để áp dụng nguyên tắc 3s, Trust Badges.
-- **Thư viện Tái sử dụng:** Truy cập `[[skills/SKILL_MANAGER.md]]` để lấy component code sẵn.
+## 🗺️ 3. Knowledge Vault (Quick Links)
+- **Design Tokens:** `[[skills/DESIGN_TOKENS.json]]` (No rounded corners!).
+- **Copywriting:** `[[docs/business/COPYWRITING_STYLE_GUIDE.md]]` (High-ticket tone).
+- **Lead Engine:** `[[src/leadService.js]]` & `[[src/lib/supabase.js]]`.
 
-## 3. Lệnh Vận Hành Tối Cao (Overrides)
-- Bỏ qua các file rác theo chỉ định tại `[[.claudex/IGNORE_PATTERNS.md]]`.
-- Cú pháp `[MODE: FIX]`: Bỏ qua Thinking, nhả code sửa lỗi ngay lập tức.
-- Lệnh `/heartbeat`: Dừng mọi việc, quét toàn bộ repo kiểm tra Tracking / Anti-patterns.
-- Lệnh `/save_session`: Tóm tắt toàn bộ quyết định kỹ thuật của phiên chat hiện tại.
-
-**> Sẵn sàng nhận lệnh. Trạng thái: MAXPING.**
-- **SEO & Social:** Đọc `[[docs/business/SEO_GROWTH_CHECKLIST.md]]` để cấu hình Head tags.
-- **Design Tokens:** Sử dụng các biến màu/font tại `[[skills/DESIGN_TOKENS.json]]`.
-- **Kết nối Dữ liệu:** Sử dụng kỹ năng tại `[[skills/DATA_BRIDGE_SKILL.md]]`.
-- **Quản trị Hình ảnh:** Tuân thủ hướng dẫn tại `[[docs/business/ASSET_CURATION_LOG.md]]`.
-- **Phong cách ngôn từ:** Tuân thủ `[[docs/business/COPYWRITING_STYLE_GUIDE.md]]`.
-- **Mẫu thiết kế Code:** Tham chiếu `[[skills/TECHNICAL_DESIGN_PATTERNS.md]]`.
-- **Dữ liệu chiến dịch:** Đọc `[[docs/business/CAMPAIGN_DOSSIER_STREAMER.md]]` khi làm về khóa học Streamer.
-- **Chiến lược Funnel:** Điều hướng theo `[[docs/business/FUNNEL_MAP_STRATEGY.md]]`.
-- **Bố cục UX/UI:** Áp dụng các mẫu tại `[[skills/UX_UI_CONVERSION_PATTERNS.md]]`.
+## ⚠️ 4. Critical Status (Live Issues)
+- **Path Alert:** Luôn kiểm tra path từ `src/` (VD: `./lib/supabase`).
+- **Build Status:** Đang dọn dẹp "Biển Đỏ" để đạt trạng thái MAXPING.
