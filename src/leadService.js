@@ -1,15 +1,15 @@
-import { supabase } from './lib/supabase';
+import { supabase } from './lib/supabase'; // ✅ Đã dùng 1 dấu chấm chuẩn xác
 
 /**
  * submitLead — Nhiệm vụ: Ghi danh khách hàng vào hệ thống
- * @param {Object} data — Gồm: { full_name, email, phone, ...utms }
+ * @param {Object} data - Gồm: { full_name, email, phone, campaign, ...utms }
  */
 export const submitLead = async (data) => {
   try {
     const { data: result, error } = await supabase
-      .from('leads') // Sếp nhớ tạo table 'leads' trên Supabase nhé
+      .from('leads')
       .insert([
-        { 
+        {
           ...data,
           source_url: window.location.href,
           created_at: new Date().toISOString()
@@ -17,6 +17,7 @@ export const submitLead = async (data) => {
       ]);
 
     if (error) throw error;
+    
     return { success: true, result };
   } catch (error) {
     console.error("❌ Lead Engine Error:", error.message);
