@@ -1,65 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --primary: #162030;
-  --accent: #faff00;
-  --border: #000;
+  --deep-forest: #163020;
+  --soft-cream: #EEF0E5;
+  --hunter-green: #304D30;
+  --sage-mist: #B6C4B6;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background: var(--primary);
-  color: white;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--soft-cream);
+  color: var(--deep-forest);
   margin: 0;
+  overflow-x: hidden;
 }
 
-h1, h2, h3 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
+/* Hiệu ứng Reveal chuẩn source cũ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
 }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 60px 20px;
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.card {
-  border: 2px solid var(--border);
-  padding: 20px;
-  background: white;
-  color: black;
-  box-shadow: 6px 6px 0px black;
-  transition: 0.2s;
-}
-
-.card:hover {
-  transform: translate(-4px, -4px);
-}
-
-button {
-  background: var(--accent);
-  border: 2px solid black;
-  padding: 14px 24px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 4px 4px 0px black;
-}
-
-button:hover {
-  transform: translate(-2px, -2px);
-}
-
-.form input {
-  display: block;
+/* Giữ nguyên class layout của sếp */
+.container-std {
   width: 100%;
-  margin: 10px 0;
-  padding: 12px;
-  border: 2px solid black;
-  box-sizing: border-box;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
-a {
-  color: var(--accent);
-  text-decoration: none;
+@media (max-width: 768px) {
+  .container-std { padding: 0 20px; }
 }
