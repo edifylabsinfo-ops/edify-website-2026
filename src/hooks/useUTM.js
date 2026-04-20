@@ -1,21 +1,32 @@
-import { useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
- * useUTM — Phiên bản "Nồi đồng cối đá"
- * Chống lỗi Linter, chống lỗi SSR, chống lỗi Version.
+ * Hook "Mắt thần" - Tự động bắt mọi thông số UTM từ đường dẫn URL
+ * để nhét vào Database, phục vụ tối ưu Ads.
  */
 export const useUTM = () => {
-  const utms = useMemo(() => {
-    if (typeof window === 'undefined') return {};
+  const [utms, setUtms] = useState({
+    utm_source: '',
+    utm_medium: '',
+    utm_campaign: '',
+    utm_term: '',
+    utm_content: ''
+  });
 
-    const params = new URLSearchParams(window.location.search);
-    const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
-    
-    return keys.reduce((acc, key) => {
-      const value = params.get(key);
-      if (value !== null && value !== undefined) {
-        acc[key] = value;
-      }
-      return acc;
-    }, {});
+  useEffect(() => {
+    // Chỉ kích hoạt khi chạy trên trình duyệt (tránh lỗi SSR nếu có)
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      
+      setUtms({
+        utm_source: searchParams.get('utm_source') || '',
+        utm_medium: searchParams.get('utm_medium') || '',
+        utm_campaign: searchParams.get('utm_campaign') || '',
+        utm_term: searchParams.get('utm_term') || '',
+        utm_content: searchParams.get('utm_content') || ''
+      });
+    }
   }, []);
+
+  return utms;
+};
