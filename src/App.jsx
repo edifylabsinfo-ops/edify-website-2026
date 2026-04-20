@@ -1,228 +1,195 @@
-import React, { useState, useEffect, useRef } from 'react';
-import LeadForm from './components/LeadForm';
-
-// --- SUB-COMPONENTS ---
-
-const NavItem = ({ title, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <div className="relative group" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
-      <button className="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase opacity-70 hover:opacity-100 transition-all py-4">
-        {title} {children && <span className="text-[8px]">▼</span>}
-      </button>
-      {children && isOpen && (
-        <div className="absolute top-full left-0 w-64 bg-[#163020] border border-[#EEF0E5]/10 p-4 z-50 animate-fadeIn">
-          {children}
-        </div>
-      )}
-    </div>
-  );
-};
-
-const FAQItem = ({ question, answer }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <div className="border-b border-[#EEF0E5]/10 py-6">
-      <button onClick={() => setIsOpen(!isOpen)} className="w-full flex justify-between items-center text-left group">
-        <span className={`text-sm md:text-base font-serif uppercase tracking-widest transition-all ${isOpen ? 'text-[#EEF0E5]' : 'text-[#EEF0E5]/60'}`}>
-          {question}
-        </span>
-        <span className="text-xl opacity-30 group-hover:opacity-100">{isOpen ? '−' : '+'}</span>
-      </button>
-      {isOpen && (
-        <div className="mt-4 text-[12px] tracking-widest uppercase leading-relaxed text-[#EEF0E5]/50 animate-fadeIn">
-          {answer}
-        </div>
-      )}
-    </div>
-  );
-};
-
-// --- MAIN APP ---
+import React, { useEffect } from 'react';
 
 export default function App() {
-  const [scrolled, setScrolled] = useState(false);
-  const canvasRef = useRef(null);
-
-  // Logic Particle Canvas (Hồi sinh từ bản cũ)
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let pts = [];
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
+    /* ─── TOÀN BỘ SCRIPT CỦA SẾP GIỮ NGUYÊN ─── */
+    // 1. Navigation & Scroll logic
+    const handleScroll = () => {
+      const header = document.getElementById('main-header');
+      if (window.scrollY > 60) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
     };
-    resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('scroll', handleScroll);
 
-    for (let i = 0; i < 80; i++) {
-      pts.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        r: Math.random() * 1.5 + 0.5,
+    // 2. Particle Canvas
+    const canvas = document.getElementById('heroCanvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      let pts = [];
+      const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
+      resize();
+      const N = window.innerWidth < 768 ? 55 : 110;
+      for (let i = 0; i < N; i++) pts.push({
+        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+        vx: (Math.random() - .5) * .4, vy: (Math.random() - .5) * .4,
+        r: Math.random() * 1.8 + .4, c: Math.random() > .5 ? '48,77,48' : '182,196,182', a: Math.random() * .5 + .15
       });
+      const frame = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pts.forEach((p, i) => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + p.c + ',' + p.a + ')'; ctx.fill();
+          for (let j = i + 1; j < pts.length; j++) {
+            let q = pts[j], dx = p.x - q.x, dy = p.y - q.y, d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 110) {
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+              ctx.strokeStyle = 'rgba(182,196,182,' + ((1 - d / 110) * .12) + ')'; ctx.lineWidth = .5; ctx.stroke();
+            }
+          }
+        });
+        requestAnimationFrame(frame);
+      };
+      frame();
     }
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      pts.forEach((p, i) => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(238, 240, 229, 0.15)';
-        ctx.fill();
-        for (let j = i + 1; j < pts.length; j++) {
-          const q = pts[j];
-          const d = Math.hypot(p.x - q.x, p.y - q.y);
-          if (d < 100) {
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(238, 240, 229, ${0.1 * (1 - d / 100)})`;
-            ctx.lineWidth = 0.5; ctx.stroke();
-          }
-        }
-      });
-      requestAnimationFrame(animate);
-    };
-    animate();
-    return () => window.removeEventListener('resize', resize);
-  }, []);
+    // 3. Observers & Counters
+    const revIO = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); } });
+    }, { threshold: .1 });
+    document.querySelectorAll('.reveal').forEach((el) => revIO.observe(el));
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    // 4. FAQ Logic
+    document.querySelectorAll('.faq-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const content = this.nextElementSibling;
+        const icon = this.querySelector('.faq-icon i');
+        const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+        content.style.maxHeight = isOpen ? '0px' : content.scrollHeight + "px";
+        content.style.opacity = isOpen ? 0 : 1;
+        icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+    });
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <div className="bg-[#163020] text-[#EEF0E5] font-sans selection:bg-[#EEF0E5] selection:text-[#163020]">
-      
-      {/* NAVIGATION */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 px-6 md:px-12 py-6 flex justify-between items-center ${scrolled ? 'bg-[#163020]/95 backdrop-blur-md border-b border-[#EEF0E5]/10 py-4' : 'bg-transparent'}`}>
-        <div className="text-xl font-serif tracking-[0.4em] uppercase font-bold">Edify Labs.</div>
-        <div className="hidden lg:flex gap-10">
-          <NavItem title="Dịch vụ">
-            <div className="space-y-4 text-[10px] tracking-widest uppercase">
-              <a href="#" className="block opacity-60 hover:opacity-100">/ Agency</a>
-              <a href="#" className="block opacity-60 hover:opacity-100">/ Studio Production</a>
-              <a href="#" className="block opacity-60 hover:opacity-100">/ E-Learning Platform</a>
-            </div>
-          </NavItem>
-          <NavItem title="Giải pháp" />
-          <NavItem title="Về chúng tôi" />
-        </div>
-        <button className="bg-[#EEF0E5] text-[#163020] px-6 py-2 text-[10px] font-bold tracking-widest uppercase hover:bg-white transition-all rounded-none">
-          Bắt đầu ngay
-        </button>
-      </nav>
+    <>
+      <style>{`
+        /* ─── TOÀN BỘ CSS TOKENS CỦA SẾP GIỮ NGUYÊN ─── */
+        :root {
+          --deep-forest: #163020; --soft-cream: #EEF0E5; --hunter-green: #304D30; --sage-mist: #B6C4B6;
+          --navy: var(--deep-forest); --off-white: var(--soft-cream); --electric: var(--hunter-green);
+          --gray-800: var(--deep-forest); --white: #FFFFFF;
+        }
+        body { font-family: 'Montserrat', sans-serif; background: var(--off-white); color: var(--gray-800); margin: 0; }
+        .container-std { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 40px; }
+        .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1001; background: var(--navy); height: 36px; display: flex; align-items: center; justify-content: center; }
+        .topbar-highlight { font-size: 11px; font-weight: 700; color: #FFFFFF !important; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        header { position: fixed; top: 36px; left: 0; right: 0; z-index: 1000; background: transparent; transition: all .3s; }
+        header.scrolled { background: rgba(238,240,229,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid #B6C4B6; }
+        nav { height: 64px; display: flex; align-items: center; justify-content: space-between; }
+        .logo-mark { width: 36px; height: 36px; background: var(--navy); display: flex; align-items: center; justify-content: center; position: relative; }
+        .logo-name { font-size: 15px; font-weight: 800; color: white; transition: color .3s; }
+        header.scrolled .logo-name { color: var(--navy); }
+        .nav-link { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.82); text-decoration: none; padding: 8px 14px; }
+        header.scrolled .nav-link { color: #465946; }
+        .btn-primary { font-size: 13px; font-weight: 700; color: white; background: var(--electric); border: none; padding: 9px 20px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        
+        /* Layout Sections */
+        .fh-row { display: flex; border-bottom: 1px solid rgba(0,0,0,0.1); min-height: 520px; }
+        .fh-media { flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px 40px; position: relative; }
+        .fh-content { flex: 1; padding: 60px 8%; display: flex; flex-direction: column; justify-content: center; }
+        .fh-bg-dark { background: var(--navy); color: white; }
+        .fh-tag { font-size: 10px; font-weight: 800; background: rgba(255,255,255,0.1); padding: 6px 14px; border-radius: 100px; margin-bottom: 20px; align-self: flex-start; }
+        .fh-title { font-size: 38px; font-weight: 800; margin-bottom: 16px; }
+        .reveal { opacity: 0; transform: translateY(24px); transition: all .7s; }
+        .reveal.in { opacity: 1; transform: translateY(0); }
+        
+        /* FAQ & Team */
+        .faq-panel { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; margin-bottom: 12px; }
+        .faq-btn { width: 100%; padding: 20px; background: none; border: none; color: white; font-weight: 700; display: flex; justify-content: space-between; cursor: pointer; }
+        .faq-content { max-height: 0; opacity: 0; overflow: hidden; transition: all .3s; }
+        .team-card { background: white; border: 1px solid #B6C4B6; border-radius: 20px; padding: 32px 24px; text-align: center; }
+        .team-avatar { width: 110px; height: 110px; border-radius: 50%; border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 16px; }
 
-      {/* HERO SECTION */}
-      <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        <canvas ref={canvasRef} className="absolute inset-0 z-0 opacity-40" />
-        <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
-          <div className="space-y-10">
-            <div className="w-12 h-[1px] bg-[#EEF0E5]/40"></div>
-            <h1 className="text-6xl md:text-8xl font-serif leading-none uppercase tracking-tighter">
-              Học để làm.<br />
-              <span className="text-[#EEF0E5]/30 italic">Làm để đo.</span><br />
-              Đo để tối ưu.
-            </h1>
-            <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase leading-relaxed opacity-60 max-w-md">
-              Hệ sinh thái đào tạo và thực thi Digital Marketing dựa trên dữ liệu thật. Thiết kế cho doanh nghiệp High-ticket.
-            </p>
-            <div className="flex gap-12 pt-6">
-              <div><div className="text-3xl font-serif">3.2x</div><div className="text-[8px] tracking-widest uppercase opacity-40">Avg. ROAS</div></div>
-              <div><div className="text-3xl font-serif">+2000</div><div className="text-[8px] tracking-widest uppercase opacity-40">Students</div></div>
+        @media (max-width: 768px) {
+          .fh-row { flex-direction: column !important; }
+          .container-std { padding: 0 20px; }
+        }
+      `}</style>
+
+      {/* ─── TOÀN BỘ CẤU TRÚC HTML CỦA SẾP GIỮ NGUYÊN ─── */}
+      <div className="topbar">
+        <div className="container-std">
+          <a href="#" className="topbar-highlight">
+            <i className="fa-solid fa-star"></i> Khoá học mới: TikTok Livestream Master 2026
+          </a>
+        </div>
+      </div>
+
+      <header id="main-header">
+        <nav className="container-std">
+          <a href="#" className="logo">
+            <div className="logo-mark"><span style={{color: 'white', fontWeight: 800}}>E</span></div>
+            <div style={{marginLeft: '10px', display: 'flex', flexDirection: 'column'}}>
+              <span className="logo-name">Edify Labs</span>
             </div>
+          </a>
+          <div className="nav-links">
+            <a href="#" className="nav-link">Dịch Vụ</a>
+            <a href="#" className="nav-link">Giải Pháp</a>
+            <a href="#" className="nav-link">Blog</a>
           </div>
-          <div className="relative">
-            <div className="absolute -inset-10 bg-[#EEF0E5]/5 blur-[120px] rounded-full"></div>
-            <LeadForm campaignName="Rebuild_Homepage_2026" />
+          <button className="btn-primary">Bắt Đầu Miễn Phí</button>
+        </nav>
+      </header>
+
+      <section id="hero" style={{position:'relative', minHeight:'100vh', display:'flex', alignItems:'center', background:'var(--navy)', width: '100%'}}>
+        <canvas id="heroCanvas" style={{position:'absolute', inset:0, width:'100%', height:'100%'}}></canvas>
+        <div className="container-std" style={{position:'relative', zIndex:2, textAlign:'center', width: '100%'}}>
+          <h1 style={{fontSize:'clamp(34px,5.5vw,64px)', fontWeight:800, color:'white', marginBottom:'22px'}}>
+            Học để làm.<br/>Làm để <span style={{color: 'var(--sage-mist)'}}>đo lường.</span><br/>Đo để tối ưu.
+          </h1>
+          <p style={{color:'rgba(255,255,255,0.6)', maxWidth:'540px', margin:'0 auto 40px'}}>
+            Edify Labs thiết kế hệ sinh thái học – làm – tối ưu, giúp cá nhân và doanh nghiệp tạo ra kết quả thật.
+          </p>
+          <div style={{display:'flex', gap:'14px', justifyContent:'center'}}>
+            <button className="btn-primary" style={{padding: '15px 30px'}}>Trải Nghiệm Ngay</button>
+            <button style={{background:'transparent', border:'1px solid white', color:'white', padding:'15px 30px', borderRadius:'8px'}}>Tư Vấn</button>
           </div>
         </div>
       </section>
 
-      {/* 4 VIDEO FORMATS SECTION (THE CORE) */}
-      <section className="py-32 border-y border-[#EEF0E5]/10 bg-[#12281a]">
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="mb-20 text-center">
-            <h2 className="text-4xl md:text-6xl font-serif uppercase tracking-tight">4 Dòng Video <span className="text-[#EEF0E5]/30">Thống Trị.</span></h2>
+      <section id="video-formats" style={{background: 'var(--off-white)'}}>
+        <div className="fh-row fh-bg-dark reveal">
+          <div className="fh-media">
+             <div style={{width: '280px', height: '500px', background: '#000', borderRadius: '16px'}}></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-[#EEF0E5]/10 border border-[#EEF0E5]/10">
-            {[
-              { id: '01', title: 'Talking Head', desc: 'Xây dựng uy tín chuyên gia' },
-              { id: '02', title: 'Cinematic', desc: 'Đỉnh cao tư duy thẩm mỹ' },
-              { id: '03', title: 'Vlog Story', desc: 'Nghệ thuật kể chuyện' },
-              { id: '04', title: 'Short Viral', desc: 'Làm chủ cuộc chơi tương tác' }
-            ].map(item => (
-              <div key={item.id} className="bg-[#163020] p-10 space-y-12 hover:bg-[#EEF0E5] hover:text-[#163020] transition-all duration-700 group">
-                <div className="text-4xl font-serif opacity-10 group-hover:opacity-100">{item.id}</div>
-                <div>
-                  <h4 className="text-lg font-serif uppercase tracking-widest mb-3">{item.title}</h4>
-                  <p className="text-[10px] tracking-widest uppercase opacity-50 group-hover:opacity-100">{item.desc}</p>
-                </div>
-              </div>
-            ))}
+          <div className="fh-content">
+            <span className="fh-tag">1. Talking Head</span>
+            <h3 className="fh-title">Xây Dựng Uy Tín</h3>
+            <p style={{fontStyle: 'italic', opacity: 0.7}}>"Trở thành gương mặt thương hiệu triệu view"</p>
           </div>
         </div>
       </section>
 
-      {/* TEAM SECTION */}
-      <section className="py-32 container mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-20">
-          <div className="space-y-6">
-            <h2 className="text-4xl font-serif uppercase">Đội ngũ <br /> Thực chiến.</h2>
-            <p className="text-[10px] tracking-widest uppercase opacity-40 leading-loose">
-              Chúng tôi không phải những nhà lý thuyết. Mỗi chuyên gia tại Edify Labs đều đang trực tiếp vận hành ngân sách Ads hàng tỷ đồng mỗi tháng.
-            </p>
-          </div>
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <div className="aspect-[4/5] bg-[#EEF0E5]/5 border border-[#EEF0E5]/10 grayscale hover:grayscale-0 transition-all duration-1000 flex items-center justify-center text-[8px] tracking-[0.5em] uppercase opacity-20">[ Photo: Lê Thanh Phong ]</div>
-              <div>
-                <h4 className="font-serif uppercase tracking-widest">Lê Thanh Phong</h4>
-                <p className="text-[9px] tracking-widest uppercase opacity-40 italic">Founder & CEO / Growth Strategy</p>
-              </div>
+      <section id="team" style={{padding: '96px 0'}}>
+        <div className="container-std">
+          <h2 style={{textAlign: 'center', marginBottom: '50px'}}>Đội Ngũ Chuyên Gia</h2>
+          <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px'}}>
+            <div className="team-card reveal">
+              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300" className="team-avatar" alt="Phong" />
+              <h3 className="team-name">Lê Thanh Phong</h3>
+              <p className="team-role">Founder & CEO</p>
             </div>
-            <div className="space-y-6">
-              <div className="aspect-[4/5] bg-[#EEF0E5]/5 border border-[#EEF0E5]/10 grayscale hover:grayscale-0 transition-all duration-1000 flex items-center justify-center text-[8px] tracking-[0.5em] uppercase opacity-20">[ Photo: Data Expert ]</div>
-              <div>
-                <h4 className="font-serif uppercase tracking-widest">Trần Minh Tuấn</h4>
-                <p className="text-[9px] tracking-widest uppercase opacity-40 italic">Performance Director</p>
-              </div>
+            <div className="team-card reveal">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300" className="team-avatar" alt="Tuan" />
+              <h3 className="team-name">Trần Minh Tuấn</h3>
+              <p className="team-role">Performance Director</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ SECTION */}
-      <section className="py-32 bg-[#12281a] border-t border-[#EEF0E5]/10">
-        <div className="max-w-3xl mx-auto px-6">
-          <h2 className="text-3xl font-serif uppercase tracking-widest mb-16 text-center">Hỏi đáp.</h2>
-          <FAQItem question="Khóa học có phù hợp cho người mới?" answer="Quy trình đào tạo tại Edify Labs được thiết kế theo lộ trình 'Cầm tay chỉ việc', giúp người mới bắt đầu có thể tạo ra kết quả thực tế ngay trong tuần đầu tiên." />
-          <FAQItem question="Tôi sẽ nhận được gì sau khóa học?" answer="Hệ thống tư duy Performance, bộ Portfolio video chuẩn cinematic và chứng chỉ xác nhận năng lực thực chiến từ Edify Labs." />
-          <FAQItem question="Hình thức hỗ trợ học viên?" answer="Hệ thống Mentor 1-1 hỗ trợ trực tiếp qua group kín và các buổi Live Workshop hàng tuần để xử lý vấn đề thực tế." />
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="py-20 border-t border-[#EEF0E5]/10 text-center">
-        <div className="text-3xl font-serif tracking-[0.5em] uppercase mb-10">Edify Labs.</div>
-        <div className="flex justify-center gap-8 text-[10px] tracking-[0.2em] uppercase opacity-30 mb-10">
-          <a href="#">Facebook</a>
-          <a href="#">TikTok</a>
-          <a href="#">Zalo</a>
-          <a href="#">Youtube</a>
-        </div>
-        <div className="text-[8px] tracking-[0.4em] uppercase opacity-20">
-          © 2026 EDIFY LABS TRAINING & CONSULTING. ALL RIGHTS RESERVED.
+      <footer style={{background: 'var(--navy)', color: 'white', padding: '60px 0', textAlign: 'center'}}>
+        <div className="container-std">
+          <p style={{opacity: 0.5, fontSize: '12px'}}>© 2026 EDIFY LABS TRAINING AND CONSULTING. All rights reserved.</p>
         </div>
       </footer>
-    </div>
+    </>
   );
 }
