@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import useCountUp from '../../hooks/useCountUp.js'
+import useCountUp from '../hooks/useCountUp.js'
 
 const STATS = [
   { value: 568,  suffix: '+',  label: 'HỌC VIÊN ĐÃ TRIỂN KHAI',   sub: 'across all programs'  },
