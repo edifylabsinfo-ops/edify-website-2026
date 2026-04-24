@@ -1,5 +1,5 @@
 import { BarChart2, Database, Video, BookOpen, Users, Activity, TrendingUp, Award, ArrowRight } from 'lucide-react'
-import useScrollReveal from '../../hooks/useScrollReveal.js'
+import useScrollReveal from '../hooks/useScrollReveal.js'
 
 const PERSONAL = [
   { icon: BarChart2, label: 'Performance Ads',  desc: 'Facebook, TikTok — tối ưu theo chỉ số ROAS thật.' },
