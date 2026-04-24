@@ -3,31 +3,28 @@ import { ArrowRight, ChevronLeft } from 'lucide-react'
 
 const STEPS = [
   {
-    title: 'NGÂN SÁCH HÀNG THÁNG',
-    sub:   'Chọn mức phù hợp với giai đoạn hiện tại của bạn.',
-    options: ['Dưới 10 triệu', '10 – 30 triệu', '30 – 100 triệu', 'Trên 100 triệu'],
+    id: 1,
+    title: "NỖI ĐAU LỚN NHẤT", // Giờ thằng này lên làm Đại ca
+    sub: "Bạn đang gặp khó khăn ở đâu nhất?",
+    options: [
+      "Ads tốn tiền, không có Lead chất lượng",
+      "Không có đội ngũ Content chuyên nghiệp",
+      "Không biết đo lường hiệu quả Marketing",
+      "Thiếu quy trình chốt Sale bài bản"
+    ]
   },
   {
-    title: 'NỖI ĐAU LỚN NHẤT',
-    sub:   'Bạn đang bị kéo chậm bởi điều gì?',
+    id: 2,
+    title: "MỤC TIÊU 6 THÁNG",
+    sub: "Kết quả nào bạn muốn đạt được nhất?",
     options: [
-      'Ads tốn tiền, không ra Lead chất lượng',
-      'Không có đội ngũ Content chuyên nghiệp',
-      'Không biết đo lường hiệu quả Marketing',
-      'Thiếu quy trình chốt Sale bài bản',
-    ],
-  },
-  {
-    title: 'MỤC TIÊU 6 THÁNG',
-    sub:   'Kết quả nào bạn muốn đạt được?',
-    options: [
-      'Tối ưu CPL xuống 50%',
-      'Xây kênh TikTok/Reels đạt 100K+',
-      'Tuyển sinh đều đặn hơn 30%',
-      'Xây hệ thống Marketing tự động',
-    ],
-  },
-]
+      "Tối ưu CPA xuống 50%",
+      "Xây kênh TikTok/Reels đạt 100k+",
+      "Tuyển mới đội ngũ triển khai 30%",
+      "Xây hệ thống Marketing tự động"
+    ]
+  }
+];
 
 export default function Quiz({ onComplete }) {
   const [step,    setStep]    = useState(0)
