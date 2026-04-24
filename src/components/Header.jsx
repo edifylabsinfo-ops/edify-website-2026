@@ -1,123 +1,151 @@
-import { useState, useEffect } from 'react'
-import { Menu, X, ArrowRight } from 'lucide-react'
+import React, { useState } from 'react';
+import { ChevronDown, Briefcase, Video, GraduationCap, Facebook, Smartphone, Users, School, Star, Zap, MessageCircle } from 'lucide-react';
 
-const NAV = [
-  { label: 'TRANG CHỦ', href: '#' },
-  { label: 'DỊCH VỤ',   href: '#solutions' },
-  { label: 'GIẢI PHÁP', href: '#solutions' },
-  { label: 'GIỚI THIỆU',href: '#' },
-  { label: 'BLOG',       href: '#' },
-]
+const Header = () => {
+  const [activeMenu, setActiveMenu] = useState(null);
 
-export default function Header() {
-  const [scrolled,    setScrolled]    = useState(false)
-  const [mobileOpen,  setMobileOpen]  = useState(false)
-
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 60)
-    window.addEventListener('scroll', fn, { passive: true })
-    return () => window.removeEventListener('scroll', fn)
-  }, [])
-
-  // Lock body scroll when overlay is open
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [mobileOpen])
-
-  const navBg    = scrolled ? 'rgba(238,240,229,0.97)' : 'transparent'
-  const navBlur  = scrolled ? 'blur(12px)'             : 'none'
-  const textCol  = scrolled ? '#163020'                : '#EEF0E5'
-  const logoBlk  = scrolled ? '#304D30'                : '#EEF0E5'
-  const logoE    = scrolled ? '#EEF0E5'                : '#163020'
+  const menus = {
+    dichvu: {
+      left: [
+        { icon: <Briefcase size={20}/>, title: "Agency", desc: "Triển khai quảng cáo & content toàn diện" },
+        { icon: <Video size={20}/>, title: "Studio", desc: "Sản xuất video, podcast & creative content" },
+        { icon: <GraduationCap size={20}/>, title: "E-Learning", desc: "Khóa học online từ cơ bản đến chuyên sâu" }
+      ],
+      right: [
+        { icon: <Facebook size={20}/>, title: "Cho Thuê TK Facebook Ads", desc: "Tài khoản Via, BM ổn định, hạn mức cao" },
+        { icon: <Smartphone size={20}/>, title: "Cho Thuê TK TikTok Ads", desc: "Agency Account chính hãng, pixel sạch" }
+      ]
+    },
+    giaiphap: [
+      { icon: <Users size={20}/>, title: "Dành cho Cá Nhân", desc: "Freelancer, Creator, Marketer tự do" },
+      { icon: <School size={20}/>, title: "Dành cho Trường Học", desc: "Trung tâm đào tạo, cơ sở giáo dục" },
+      { icon: <Briefcase size={20}/>, title: "Dành cho Doanh Nghiệp", desc: "SME, startup, đội marketing in-house" },
+      { icon: <Star size={20}/>, title: "Chứng Nhận", desc: "Cấp chứng chỉ nghề nghiệp được công nhận" }
+    ]
+  };
 
   return (
-    <>
-      <header className="fixed left-0 right-0 z-50 transition-all duration-300"
-              style={{ top: 36, backgroundColor: navBg, backdropFilter: navBlur,
-                       borderBottom: scrolled ? '1px solid rgba(22,48,32,0.1)' : 'none' }}>
-        <div className="max-w-[1280px] mx-auto px-6 h-16 flex items-center justify-between">
+    <nav className="fixed top-9 left-0 right-0 z-[90] bg-[#163020]/80 backdrop-blur-md border-b border-[#EEF0E5]/10 text-[#EEF0E5]">
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        {/* Logo */}
+        <div className="flex items-center gap-3 cursor-pointer">
+          <div className="w-8 h-8 bg-[#EEF0E5] flex items-center justify-center rounded-sm font-bold text-[#163020]">E</div>
+          <div className="leading-tight uppercase tracking-tighter">
+            <div className="font-bold text-lg">Edify Labs</div>
+            <div className="text-[8px] opacity-50">Knowledge to Execution</div>
+          </div>
+        </div>
 
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-3" style={{ textDecoration: 'none' }}>
-            <div className="w-10 h-10 flex items-center justify-center flex-shrink-0 transition-colors duration-300"
-                 style={{ backgroundColor: logoBlk }}>
-              <span style={{ fontFamily: 'Montserrat', fontWeight: 900, fontSize: 22,
-                             color: logoE, letterSpacing: '-0.03em', lineHeight: 1 }}>E</span>
-            </div>
-            <div className="flex flex-col gap-0.5">
-              <span style={{ fontFamily: 'Montserrat', fontWeight: 700, fontSize: 13,
-                             letterSpacing: '0.15em', color: textCol,
-                             transition: 'color 0.3s', lineHeight: 1 }}>EDIFY LABS</span>
-              <span style={{ fontFamily: 'Montserrat', fontWeight: 500, fontSize: 7.5,
-                             letterSpacing: '0.22em', color: scrolled ? 'rgba(22,48,32,0.42)' : 'rgba(238,240,229,0.42)',
-                             transition: 'color 0.3s', lineHeight: 1 }}>FROM KNOWLEDGE TO EXECUTION</span>
-            </div>
-          </a>
-
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {NAV.map((n) => (
-              <a key={n.label} href={n.href}
-                 style={{ fontFamily: 'Montserrat', fontWeight: 700, fontSize: 10,
-                          letterSpacing: '0.18em', color: scrolled ? 'rgba(22,48,32,0.65)' : 'rgba(238,240,229,0.65)',
-                          textDecoration: 'none', transition: 'color 0.2s' }}
-                 onMouseEnter={(e) => e.target.style.color = textCol}
-                 onMouseLeave={(e) => e.target.style.color = scrolled ? 'rgba(22,48,32,0.65)' : 'rgba(238,240,229,0.65)'}>
-                {n.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* CTA */}
-          <div className="hidden lg:flex items-center gap-4">
-            <a href="#lead-form" className="btn-solid flex items-center gap-2"
-               style={{ color: '#EEF0E5', textDecoration: 'none' }}
-               onClick={() => { window.fbq?.('track', 'Lead', { content_name: 'header_cta' }); window.dataLayer?.push({ event: 'cta_click', cta_id: 'header_cta' }) }}>
-              BẮT ĐẦU MIỄN PHÍ <ArrowRight size={12} />
-            </a>
+        {/* Navigation links */}
+        <div className="hidden md:flex items-center gap-8">
+          <a href="#" className="text-sm font-medium hover:text-white transition-colors">Trang Chủ</a>
+          
+          {/* Dịch Vụ Dropdown */}
+          <div 
+            className="relative group h-16 flex items-center"
+            onMouseEnter={() => setActiveMenu('dichvu')}
+            onMouseLeave={() => setActiveMenu(null)}
+          >
+            <button className={`flex items-center gap-1 text-sm font-medium transition-all ${activeMenu === 'dichvu' ? 'bg-[#EEF0E5] text-[#163020] px-3 py-1 rounded-md' : ''}`}>
+              Dịch Vụ <ChevronDown size={14} className={`transition-transform ${activeMenu === 'dichvu' ? 'rotate-180' : ''}`} />
+            </button>
+            
+            {/* Mega Menu Dịch Vụ */}
+            {activeMenu === 'dichvu' && (
+              <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[700px] bg-white text-[#163020] shadow-2xl rounded-b-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="grid grid-cols-2">
+                  <div className="p-8 border-r border-gray-100">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-6">Dịch vụ chính</p>
+                    <div className="space-y-6">
+                      {menus.dichvu.left.map((item, i) => (
+                        <div key={i} className="flex gap-4 group/item cursor-pointer">
+                          <div className="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-gray-500 group-hover/item:bg-[#163020] group-hover/item:text-white transition-all">
+                            {item.icon}
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-sm">{item.title}</h4>
+                            <p className="text-xs text-gray-400 mt-0.5">{item.desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="p-8 bg-gray-50/50">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-6">Tài khoản quảng cáo</p>
+                    <div className="space-y-6">
+                      {menus.dichvu.right.map((item, i) => (
+                        <div key={i} className="flex gap-4 group/item cursor-pointer">
+                          <div className="w-10 h-10 rounded-lg bg-white shadow-sm flex items-center justify-center text-gray-500 group-hover/item:bg-[#163020] group-hover/item:text-white transition-all">
+                            {item.icon}
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-sm">{item.title}</h4>
+                            <p className="text-xs text-gray-400 mt-0.5">{item.desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-8 p-4 bg-[#163020]/5 rounded-lg border border-[#163020]/10">
+                       <p className="text-[10px] font-bold mb-2">Hỗ trợ nhanh</p>
+                       <div className="flex gap-2">
+                          <button className="flex-1 text-[10px] py-2 border border-gray-300 rounded hover:bg-white transition-all">Zalo OA</button>
+                          <button className="flex-1 text-[10px] py-2 border border-gray-300 rounded hover:bg-white transition-all">Messenger</button>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-[#163020] text-white p-4 flex justify-between items-center px-8">
+                   <span className="text-xs opacity-80">Chưa biết nên chọn gói nào?</span>
+                   <button className="text-xs font-bold flex items-center gap-2 uppercase">Nhận tư vấn miễn phí <Zap size={12}/></button>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Hamburger */}
-          <button className="lg:hidden p-1" onClick={() => setMobileOpen(true)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-            <Menu size={22} color={textCol} />
+          {/* Giải Pháp Dropdown */}
+          <div 
+            className="relative group h-16 flex items-center"
+            onMouseEnter={() => setActiveMenu('giaiphap')}
+            onMouseLeave={() => setActiveMenu(null)}
+          >
+            <button className={`flex items-center gap-1 text-sm font-medium transition-all ${activeMenu === 'giaiphap' ? 'bg-[#EEF0E5] text-[#163020] px-3 py-1 rounded-md' : ''}`}>
+              Giải Pháp <ChevronDown size={14} className={`transition-transform ${activeMenu === 'giaiphap' ? 'rotate-180' : ''}`} />
+            </button>
+            
+            {activeMenu === 'giaiphap' && (
+              <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[600px] bg-white text-[#163020] shadow-2xl rounded-b-xl p-8 animate-in fade-in slide-in-from-top-2 duration-300">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-6">Giải pháp theo đối tượng</p>
+                <div className="grid grid-cols-2 gap-x-12 gap-y-8">
+                  {menus.giaiphap.map((item, i) => (
+                    <div key={i} className="flex gap-4 group/item cursor-pointer">
+                      <div className="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-gray-500 group-hover/item:bg-[#163020] group-hover/item:text-white transition-all">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm">{item.title}</h4>
+                        <p className="text-xs text-gray-400 mt-0.5">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <a href="#" className="text-sm font-medium hover:text-white transition-colors">Giới Thiệu</a>
+          <a href="#" className="text-sm font-medium hover:text-white transition-colors">Blog</a>
+        </div>
+
+        {/* Right buttons */}
+        <div className="flex items-center gap-4">
+          <button className="hidden sm:block text-xs font-bold uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity">Đăng Nhập</button>
+          <button className="bg-[#EEF0E5] text-[#163020] px-5 py-2 text-xs font-bold uppercase tracking-widest hover:bg-white transition-all">
+            Bắt đầu miễn phí
           </button>
         </div>
-      </header>
+      </div>
+    </nav>
+  );
+};
 
-      {/* FULLSCREEN OVERLAY — mobile */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center"
-             style={{ backgroundColor: '#163020' }}>
-
-          <button className="absolute top-11 right-6" onClick={() => setMobileOpen(false)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-            <X size={28} color="#EEF0E5" />
-          </button>
-
-          <nav className="flex flex-col items-center gap-8">
-            {NAV.map((n, i) => (
-              <a key={n.label} href={n.href} onClick={() => setMobileOpen(false)}
-                 className="reveal visible"
-                 style={{
-                   fontFamily: 'Montserrat', fontWeight: 900, fontSize: 'clamp(28px, 8vw, 52px)',
-                   letterSpacing: '-0.02em', color: '#EEF0E5',
-                   textDecoration: 'none', textTransform: 'uppercase',
-                   opacity: 0, animation: `reveal-up 0.5s ease ${i * 0.07}s forwards`,
-                 }}>
-                {n.label}
-              </a>
-            ))}
-          </nav>
-
-          <a href="#lead-form" onClick={() => setMobileOpen(false)}
-             className="btn-solid mt-14 flex items-center gap-2"
-             style={{ textDecoration: 'none', color: '#EEF0E5' }}>
-            BẮT ĐẦU MIỄN PHÍ <ArrowRight size={12} />
-          </a>
-        </div>
-      )}
-    </>
-  )
-}
+export default Header;
