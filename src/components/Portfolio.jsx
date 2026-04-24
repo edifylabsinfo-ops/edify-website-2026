@@ -1,4 +1,4 @@
-import useScrollReveal from '../../hooks/useScrollReveal.js'
+import useScrollReveal from '../hooks/useScrollReveal.js'
 
 const VIDEOS = [
   {
