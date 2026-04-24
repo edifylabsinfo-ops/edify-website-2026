@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #163020;
+    color: #EEF0E5;
+    overflow-x: hidden;
+  }
+
+  /* Zero rounded — brand rule */
+  button, input, textarea, select, a { border-radius: 0 !important; }
+}
+
+@layer utilities {
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Cinematic grayscale hover */
+  .grayscale-hover {
+    filter: grayscale(100%);
+    transition: filter 0.4s ease;
+  }
+  .grayscale-hover:hover {
+    filter: grayscale(0%);
+  }
+
+  /* Ticker wrapper */
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker 28s linear infinite;
+  }
+
+  /* CTA glow */
+  .btn-solid {
+    background-color: #304D30;
+    color: #EEF0E5;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border: 1px solid #304D30;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .btn-solid:hover { background-color: #3d6140; border-color: #3d6140; }
+
+  .btn-outline {
+    background-color: transparent;
+    color: #EEF0E5;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border: 1px solid rgba(238,240,229,0.35);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: #EEF0E5; }
+}
