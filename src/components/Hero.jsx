@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { ArrowRight, Zap } from 'lucide-react'
-import useCanvasEffect  from '../../hooks/useCanvasEffect.js'
-import useScrollReveal  from '../../hooks/useScrollReveal.js'
+import useCanvasEffect  from '../hooks/useCanvasEffect.js'
+import useScrollReveal  from '../hooks/useScrollReveal.js'
 
 export default function Hero() {
   const canvasRef = useRef(null)
