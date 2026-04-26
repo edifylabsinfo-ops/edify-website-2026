@@ -1,63 +1,66 @@
 import React, { useState } from 'react';
-import { ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 const LeadForm = () => {
-  const [status, setStatus] = useState('idle'); // idle, submitting, success
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setStatus('submitting');
+    setIsSubmitting(true);
     
-    // Giả lập call API (Google Sheet / Webhook) mất 1.5s
+    // Giả lập call API Webhook mất 2 giây
     setTimeout(() => {
-      setStatus('success');
-    }, 1500);
+      setIsSubmitting(false);
+      setIsSuccess(true);
+    }, 2000);
   };
 
-  if (status === 'success') {
-    return (
-      <section className="py-32 bg-[#163020] text-[#EEF0E5] flex items-center justify-center reveal">
-        <div className="text-center max-w-lg px-6">
-          <CheckCircle2 size={64} className="mx-auto mb-8 text-[#EEF0E5]/80" />
-          <h2 className="text-3xl font-bold uppercase tracking-tighter mb-4">Yêu cầu đã được ghi nhận</h2>
-          <p className="opacity-70 leading-relaxed text-sm">Cảm ơn bạn đã tin tưởng Edify Labs. Chuyên gia của chúng tôi sẽ phân tích dữ liệu và liên hệ lại qua số điện thoại trong vòng 24h làm việc.</p>
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <section className="py-32 bg-[#163020] text-[#EEF0E5] border-t border-[#EEF0E5]/10 reveal">
-      <div className="max-w-3xl mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tighter uppercase text-center">Bắt đầu ngay hôm nay</h2>
-        <p className="text-center opacity-60 mb-16 text-sm">Để lại thông tin để nhận tư vấn cấu trúc hệ thống Growth phù hợp nhất.</p>
+    <section className="py-24 bg-[#163020] text-[#EEF0E5] border-t border-[#EEF0E5]/10 reveal relative overflow-hidden">
+      <div className="max-w-3xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold tracking-tighter uppercase mb-4">Sẵn Sàng Bứt Phá?</h2>
+          <p className="opacity-60 text-sm">Để lại thông tin, chuyên gia Growth của Edify sẽ phân tích hệ thống của bạn hoàn toàn miễn phí.</p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-12">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="relative group">
-              <input type="text" required placeholder="Họ và tên của bạn" className="w-full bg-transparent border-b border-[#EEF0E5]/30 py-4 text-[#EEF0E5] placeholder-[#EEF0E5]/40 focus:outline-none focus:border-[#EEF0E5] transition-colors rounded-none" />
-            </div>
-            <div className="relative group">
-              <input type="tel" required placeholder="Số điện thoại Zalo" className="w-full bg-transparent border-b border-[#EEF0E5]/30 py-4 text-[#EEF0E5] placeholder-[#EEF0E5]/40 focus:outline-none focus:border-[#EEF0E5] transition-colors rounded-none" />
-            </div>
+        {isSuccess ? (
+          <div className="bg-[#EEF0E5]/5 border border-[#EEF0E5]/20 p-12 text-center animate-in fade-in duration-700">
+            <h3 className="text-2xl font-bold mb-4 uppercase tracking-widest text-[#EEF0E5]">Yêu cầu đã được ghi nhận</h3>
+            <p className="opacity-60 text-sm">Chuyên gia của Edify Labs sẽ liên hệ với bạn trong vòng 24 giờ tới.</p>
           </div>
-          
-          <div className="relative group">
-            <input type="text" placeholder="Bạn đang gặp vấn đề lớn nhất là gì?" className="w-full bg-transparent border-b border-[#EEF0E5]/30 py-4 text-[#EEF0E5] placeholder-[#EEF0E5]/40 focus:outline-none focus:border-[#EEF0E5] transition-colors rounded-none" />
-          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-12">
+            <div className="grid md:grid-cols-2 gap-12">
+              <div className="relative">
+                <input required type="text" placeholder="Họ và tên *" className="w-full bg-transparent border-b border-[#EEF0E5]/30 py-3 text-[#EEF0E5] placeholder:text-[#EEF0E5]/30 focus:outline-none focus:border-[#EEF0E5] transition-colors" />
+              </div>
+              <div className="relative">
+                <input required type="tel" placeholder="Số điện thoại *" className="w-full bg-transparent border-b border-[#EEF0E5]/30 py-3 text-[#EEF0E5] placeholder:text-[#EEF0E5]/30 focus:outline-none focus:border-[#EEF0E5] transition-colors" />
+              </div>
+            </div>
+            
+            <div className="relative">
+              <input type="url" placeholder="Link Website / Fanpage (Nếu có)" className="w-full bg-transparent border-b border-[#EEF0E5]/30 py-3 text-[#EEF0E5] placeholder:text-[#EEF0E5]/30 focus:outline-none focus:border-[#EEF0E5] transition-colors" />
+            </div>
 
-          <button 
-            type="submit" 
-            disabled={status === 'submitting'}
-            className="w-full py-5 mt-8 bg-[#EEF0E5] text-[#163020] font-bold text-sm uppercase tracking-[0.2em] hover:bg-white transition-all flex justify-center items-center gap-3 disabled:opacity-70"
-          >
-            {status === 'submitting' ? (
-              <><Loader2 size={18} className="animate-spin" /> ĐANG XỬ LÝ...</>
-            ) : (
-              <>GỬI YÊU CẦU TƯ VẤN <ArrowRight size={18} /></>
-            )}
-          </button>
-        </form>
+            <div className="relative">
+              <textarea required rows="1" placeholder="Vấn đề lớn nhất bạn đang gặp phải là gì?" className="w-full bg-transparent border-b border-[#EEF0E5]/30 py-3 text-[#EEF0E5] placeholder:text-[#EEF0E5]/30 focus:outline-none focus:border-[#EEF0E5] transition-colors resize-none overflow-hidden"></textarea>
+            </div>
+
+            <button 
+              type="submit" 
+              disabled={isSubmitting}
+              className="w-full bg-[#EEF0E5] text-[#163020] py-5 font-bold uppercase tracking-[0.2em] text-sm hover:bg-white transition-colors disabled:opacity-70 flex justify-center items-center gap-3"
+            >
+              {isSubmitting ? (
+                <> <Loader2 className="animate-spin" size={20} /> Đang xử lý... </>
+              ) : (
+                "Gửi Yêu Cầu Tư Vấn"
+              )}
+            </button>
+          </form>
+        )}
       </div>
     </section>
   );
